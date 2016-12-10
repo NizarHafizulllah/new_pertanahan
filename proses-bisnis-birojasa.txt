@@ -1,0 +1,60 @@
+proses BBN1
+
+
+0. input data 
+1. input biaya
+2. masuk samsat. 
+3. stnk sudah jadi (no stnk dan tanggal stnk pajak)
+4. bpkb sudah jadi (no bpkb, tanggal bpkb)
+5. input biaya kelebihan 
+6. serah stnk (tanggal dan siapa yang menyerahkan)
+7. menyerahkan bpkb (tanggal serah bpkb, dan siapa yang menyerahkan )
+8. invoice (tanggal pembayaran,user, metode bayar, no kartu debit, ref id debit, jumlah bayar)
+9. Selesai
+
+
+samsat_masuk_tgl
+samsat_masuk_user
+stnk_no
+stnk_tgl 
+bpkb_no
+bpkb_tgl
+biaya_lebih_jumlah
+biaya_lebih_user
+stnk_serah_tgl
+stnk_serah_user
+bpkb_serah_tgl
+bpkb_serah_user
+bayar_tgl
+bayar_user
+bayar_metode
+bayar_no_cc
+bayar_ref_cc
+bayar_jumlah 
+
+
+
+
+
+Proses BBN 2 
+
+0. input data 
+1. masuk samsat (tanggal berapa, siapa)
+3. samsat beres( tanggal berapa, siapa)
+4. menyerahkan berkas (tanggal serah berkas, dan siapa yang menyerahkan )
+5. invoice (tanggal pembayaran,user, metode bayar, no kartu debit, ref id debit, jumlah bayar)
+
+
+samsat_masuk_tgl
+samsat_masuk_user
+samsat_selesai_tgl
+samsat_selesai_user
+berkas_serah_tgl
+berkas_serah_user
+bayar_tgl
+bayar_user
+bayar_metode
+bayar_no_cc
+bayar_ref_cc
+bayar_jumlah 
+
