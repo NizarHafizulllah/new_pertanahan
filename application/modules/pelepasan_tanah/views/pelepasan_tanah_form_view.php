@@ -449,6 +449,7 @@
             <td width="30%">Surat</td>
             <td>
             <textarea name="surat" id="isi_surat" class="form-control" ></textarea>
+            <input type="hidden" name="id" id="id_surat" />
               <!-- <input type="text" name="surat" id="surat" class="form-control" placeholder="Surat"> -->
             </td>
           </tr>   

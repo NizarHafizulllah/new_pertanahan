@@ -623,65 +623,31 @@ function get_surat_detail($id){
 
 function surat_update(){
     $post = $this->input->post();
-    show_array($post);
-    exit();
-}
 
+     $this->load->library('form_validation');
 
-
-function update(){
-
-    $post = $this->input->post();
-   
-       
-
-
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('pembuat_pernyataan','Nama Pembuat Pernyataan','required'); 
+        $this->form_validation->set_rules('surat','Surat ','required'); 
                  
          
         $this->form_validation->set_message('required', ' %s Harus diisi ');
         
         $this->form_validation->set_error_delimiters('', '<br>');
 
-     
-
-        //show_array($data);
-
-if($this->form_validation->run() == TRUE ) { 
-
-        // $post['tgl_lhr_pemilik'] = flipdate($post['tgl_lhr_pemilik']);
-        $post['tgl_pernyataan'] = flipdate($post['tgl_pernyataan']);
-        $post['tgl_register_desa'] = flipdate($post['tgl_register_desa']);
-        $userdata = $this->session->userdata('desa_login');
-        $post['desa_tanah'] = $userdata['desa'];
-        $post['kec_tanah'] = $userdata['kecamatan'];
-        unset($post['pemilik_length']);
-        // $post['no_register_desa'] = $post['no_data_desa'].''.$userdata['format_reg'];
-        // $post['no_ket_desa'] = $post['no_data_desa'].''.$userdata['format_ket'];
-        // $post['no_berita_acara_desa'] = $post['no_data_desa'].''.$userdata['format_berita'];
-        $post['nama_batas_u'] = $post['saksi_satu_nama'];
-        $post['nama_batas_b'] = $post['saksi_dua_nama'];
-        $post['nama_batas_t'] = $post['saksi_tiga_nama'];
-        $post['nama_batas_s'] = $post['saksi_empat_nama'];
-
-        $post['status'] = '1';
-
-        $this->db->where("id",$post['id']);
-        $res = $this->db->update('tanah', $post); 
+    if ($this->form_validation->run() == TRUE) {
+        $this->db->where('id', $post['id']);
+        $res = $this->db->update('surat_pelepasan', $post);
         if($res){
-            $arr = array("error"=>false,'message'=>"BERHASIL DIUPDATE");
+           $arr = array('error' => false, 'message' => 'BERHASIL DIUPDAE');
+        }else{
+            $arr = array('error' => true, 'message' => 'GAGAL DIUPDAE');
         }
-        else {
-             $arr = array("error"=>true,'message'=>"GAGAL  DIUPDATE");
-        }
+    }else{
+        $arr = array("error"=>true,'message'=>validation_errors());
+    }
+    echo json_encode($arr);
 }
-else {
-    $arr = array("error"=>true,'message'=>validation_errors());
-}
-        echo json_encode($arr);
-}
+
+
 
 
 function tmp_surat_pelepasam_simpan(){
