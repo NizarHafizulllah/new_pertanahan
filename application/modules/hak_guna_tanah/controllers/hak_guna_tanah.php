@@ -2130,6 +2130,7 @@ function get_data_penduduk(){
     
     $userdata = $this->session->userdata('desa_login');
     
+
     $this->db->where('id', $id);
     $rs = $this->db->get('utama');
     $data = $rs->row_array();
@@ -2170,6 +2171,7 @@ function get_data_penduduk(){
     $this->load->library('Pdf');
         $pdf = new Pdf('L', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetTitle( $data['header']);
+
      
         $pdf->SetMargins(10, 10, 10);
         $pdf->SetHeaderMargin(10);
@@ -2181,10 +2183,13 @@ function get_data_penduduk(){
          
             
         $pdf->setPrintHeader(false);
+
         $pdf->setPrintFooter(true);
+
 
          // add a page
         $pdf->AddPage('P');
+
 
  
 
@@ -2193,6 +2198,7 @@ function get_data_penduduk(){
 
  
          $pdf->Output($data['header']. $this->session->userdata("tahun") .'.pdf', 'I');
+
 }
 
 

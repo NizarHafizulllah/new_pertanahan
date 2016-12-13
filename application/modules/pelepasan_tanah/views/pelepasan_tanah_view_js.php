@@ -3,9 +3,9 @@
 
 $(document).ready(function(){
 
-	 var dt = $("#regis_desa").DataTable(
+	 var dt = $("#pelepasan").DataTable(
 		 	{
-		 		// "order": [[ 0, "desc" ]],
+		 	
 		 		// "iDisplayLength": 50,
 				"columnDefs": [ { "targets": 0, "orderable": false } ],
 				"processing": true,
@@ -21,7 +21,10 @@ $(document).ready(function(){
 		 	  // alert('hello');
 		 	  
 
-		 	  dt.column(1).search($("#nama_pemilik").val())
+		 	  dt.column(1).search($("#nama_pihak_pertama").val())
+        .column(2).search($("#nama_pihak_kedua").val())
+        .column(3).search($("#no_surat").val())
+        .column(4).search($("#id_desa").val())
 				 .draw();
 
 				 return false;
@@ -29,7 +32,10 @@ $(document).ready(function(){
 
 
 		 $("#btn_reset").click(function(){
-			$("#nama_pemilik").val('');
+			$("#nama_pihak_pertama").val('');
+      $("#nama_pihak_kedua").val('');
+      $("#no_surat").val('');
+      $("#id_desa").val('');
 
 			$("#btn_submit").click();
 		 });
@@ -37,26 +43,14 @@ $(document).ready(function(){
 
 });
 	
-function printper(id){
+function printsurat(id){
   
    
-  window.open('<?php echo site_url("regis_desa/pdfper?id=") ?>'+id);
+  window.open('<?php echo site_url("pelepasan_tanah/pdf?id=") ?>'+id);
   
 }
 
-function printket(id){
-  
-   
-  window.open('<?php echo site_url("regis_desa/pdfket?id=") ?>'+id);
-  
-}
 
-function printber(id){
-  
-   
-  window.open('<?php echo site_url("regis_desa/pdfberita?id=") ?>'+id);
-  
-}
 
 
 
@@ -65,7 +59,7 @@ function hapus(id){
 
 
 BootstrapDialog.show({
-            message : 'ANDA AKAN MENGHAPUS DATA BIRO JASA. ANDA YAKIN  ?  ',
+            message : 'ANDA AKAN MENGHAPUS SURAT PENYERAHAN. ANDA YAKIN  ?  ',
             title: 'KONFIRMASI HAPUS DATA  BIRO JASA',
             draggable: true,
             buttons : [

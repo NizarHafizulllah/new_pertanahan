@@ -105,4 +105,35 @@ function rupiah($angka) {
 }
 
 
+ 
+function bersih($str) {
+		if(is_array($str)) {
+			$arr_temp=array();
+			foreach($str as $index => $value){
+				$arr_temp[$index] = set_clear($value);
+			}
+			return $arr_temp;
+
+		}
+		else { 
+			return set_clear($str);
+		}
+
+
+		
+
+}
+
+
+function set_clear($str) {
+		// $a = trim(str_replace("Rp", "", $str));
+		// $x = explode(",", $a);
+		// $a = str_replace(".", "", $x[0]);
+		$str = str_replace(",", "-", $str);
+		$str = str_replace(".", "", $str);
+		$str = str_replace("-", ".", $str);
+
+		return $str; 
+}
+
 ?>

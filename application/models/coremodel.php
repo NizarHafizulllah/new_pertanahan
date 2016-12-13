@@ -68,7 +68,7 @@ var $arr_bulan = array(1=>"JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JUL
                 $res  = $this->db->get($vTable);
         //echo $this->db->last_query(); exit;
 
-                $ret = array(''=>'Semua Desa');
+                $ret = array(''=>'Pilih Satu');
 
                 foreach($res->result_array() as $row) : 
                         $ret[$row[$vINDEX]] = $row[$vVALUE];

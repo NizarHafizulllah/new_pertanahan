@@ -19,6 +19,20 @@ function surat_add() {
 }
 
 
+function saksi_pelepasan_add() {
+     
+    $('#saksi_pelepasan_modal').modal('show');
+                $("#SaksiModal").html('TAMBAH DATA SAKSI');
+                          $('#nama_saksi').val('');
+                         $('jabatan_saksi').val('');
+  document.getElementById( "btn_simpan_saksi_pelepasan" ).setAttribute( "onClick", "javascript: saksi_pelepasan_simpan();" ); 
+  $("#form_saksi_pelepasan").attr('action','<?php echo $saksi_pelepasan_add_url; ?>');
+    
+    
+
+}
+
+
 function surat_pelepasan_add() {
      
     $('#surat_pelepasan_modal').modal('show');
@@ -35,6 +49,48 @@ function surat_pelepasan_add() {
     
     
 
+}
+
+function saksi_pelepasan_simpan(){
+
+    $('#myPleaseWait').modal('show');
+        
+        $.ajax({
+            url : $("#form_saksi_pelepasan").attr('action'),
+            data : $("#form_saksi_pelepasan").serialize(),
+            dataType : 'json',
+            type : 'post',
+            success : function(obj) {
+                $('#myPleaseWait').modal('hide');
+                 console.log(obj);
+                if(obj.error==false){
+                         
+                         BootstrapDialog.alert({
+                            type: BootstrapDialog.TYPE_PRIMARY,
+                            title: 'Informasi',
+                            message: obj.message,
+                             
+                        });   
+                         
+                        $("#saksi_pelepasan_modal").modal('hide'); 
+                        $('#saksi').DataTable().ajax.reload();                       
+                        $('#form_saksi_pelepasan')[0].reset();
+                        $('#nama_saksi').val('');
+                         $('#jabatan_saksi').val('');
+                            
+                         
+                    }
+                    else {
+                         BootstrapDialog.alert({
+                            type: BootstrapDialog.TYPE_DANGER,
+                            title: 'Error',
+                            message: obj.message ,
+                             
+                        }); 
+                    }
+            }
+        });
+        return false;
 }
 
 
@@ -131,6 +187,8 @@ function surat_simpan(){
 
 	$(document).ready(function() {
 
+    $(".rp").autoNumeric('init'); 
+
     
          $(".tanggal").datepicker().on('changeDate', function(ev){                 
              $('.tanggal').datepicker('hide');
@@ -146,6 +204,15 @@ function surat_simpan(){
                 "processing": true,
                 "serverSide": true,
                 "ajax": '<?php echo $json_url_surat ?>'
+            });
+
+     var dt = $("#saksi").DataTable(
+            {
+
+                "columnDefs": [ { "targets": 0, "orderable": false } ],
+                "processing": true,
+                "serverSide": true,
+                "ajax": '<?php echo $json_url_saksi ?>'
             });
 
 
@@ -168,7 +235,36 @@ function surat_simpan(){
 
 
 
-   $("#id_kecamatan").change(function(){
+   $("#provinsi_pihak_pertama").change(function(){
+
+    $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_kota") ?>',
+            data : { id_provinsi : $(this).val() },
+            type : 'post', 
+            success : function(result) {
+                $("#kabupaten_pihak_pertama").html(result)
+            }
+      });
+
+    });
+
+   $("#kabupaten_pihak_pertama").change(function(){
+
+    $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_kecamatan") ?>',
+            data : { id_kota : $(this).val() },
+            type : 'post', 
+            success : function(result) {
+                $("#kecamatan_pihak_pertama").html(result)
+            }
+      });
+
+    });
+
+
+   $("#kecamatan_pihak_pertama").change(function(){
 
     $.ajax({
 
@@ -176,17 +272,62 @@ function surat_simpan(){
             data : { id_kecamatan : $(this).val() },
             type : 'post', 
             success : function(result) {
-                $("#id_desa").html(result)
+                $("#desa_pihak_pertama").html(result)
             }
       });
 
     });
 
-$('#no_register_desa').focus(function(){
+  $("#provinsi_pihak_kedua").change(function(){
+
+    $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_kota") ?>',
+            data : { id_provinsi : $(this).val() },
+            type : 'post', 
+            success : function(result) {
+                $("#kabupaten_pihak_kedua").html(result)
+            }
+      });
+
+    });
+
+   $("#kabupaten_pihak_kedua").change(function(){
+
+    $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_kecamatan") ?>',
+            data : { id_kota : $(this).val() },
+            type : 'post', 
+            success : function(result) {
+                $("#kecamatan_pihak_kedua").html(result)
+            }
+      });
+
+    });
+
+
+   $("#kecamatan_pihak_kedua").change(function(){
+
+    $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_desa") ?>',
+            data : { id_kecamatan : $(this).val() },
+            type : 'post', 
+            success : function(result) {
+                $("#desa_pihak_kedua").html(result)
+            }
+      });
+
+    });
+
+
+
+$('#no_surat').focus(function(){
     console.log('test');
 
     $.ajax({
-        url : '<?php echo site_url("$this->controller/get_no_regis") ?>',
+        url : '<?php echo site_url("$this->controller/get_no_surat") ?>',
         data :  $("#form_data").serialize(), 
         type : 'post',
         dataType : 'json',
@@ -198,9 +339,8 @@ $('#no_register_desa').focus(function(){
 
                 // alert('hooooo.. error false');
                      console.log(obj.error);
-            $("#no_register_desa").val(obj.no_registrasi_desa);
-            $("#no_ket_desa").val(obj.no_ket_desa);
-            $("#no_berita_acara_desa").val(obj.no_berita_acara_desa);
+            $("#no_surat").val(obj.no_surat);
+           
             
             }
             else {
@@ -405,6 +545,8 @@ $('#no_register_desa').focus(function(){
 
 
 
+
+
 function hapus_saksi(id){
 
 
@@ -472,8 +614,8 @@ function hapus(id){
 
 
 BootstrapDialog.show({
-            message : 'ANDA AKAN MENGHAPUS DATA PEMILIK TANAH. ANDA YAKIN  ?  ',
-            title: 'KONFIRMASI HAPUS DATA  PEMILIK TANAH',
+            message : 'ANDA AKAN MENGHAPUS DATA SURAT. ANDA YAKIN  ?  ',
+            title: 'KONFIRMASI HAPUS DATA  SURAT',
             draggable: true,
             buttons : [
               {
@@ -486,7 +628,7 @@ BootstrapDialog.show({
                   dialogItself.close();
                   $('#myPleaseWait').modal('show'); 
                   $.ajax({
-                    url : '<?php echo site_url("$this->controller/hapusdata_pemilik") ?>',
+                    url : '<?php echo site_url("$this->controller/hapusdata_surat") ?>',
                     type : 'post',
                     data : {id : id},
                     dataType : 'json',
@@ -500,7 +642,7 @@ BootstrapDialog.show({
                                        
                                   });   
 
-                            $('#pemilik').DataTable().ajax.reload();     
+                            $('#surat').DataTable().ajax.reload();     
                         }
                         else {
                             BootstrapDialog.alert({
@@ -555,11 +697,15 @@ function surat_edit(id){
 }
 
 
+
+
+
+
 function saksi_edit(id){
 
 
-    $('#saksi_modal').modal('show');
-    $("#form_saksi").attr('action','<?php echo site_url("$this->controller/tmp_saksi_update") ?>'); 
+    $('#saksi_pelepasan_modal').modal('show');
+    $("#form_saksi_pelepasan").attr('action','<?php echo site_url("$this->controller/tmp_saksi_update") ?>'); 
 
 
     $.ajax({
@@ -569,13 +715,10 @@ function saksi_edit(id){
     $("#modal_saksi").modal('show');
        $("#SaksiModal").html('EDIT DATA SAKSI');
        $(".tombol").prop('value','UPDATE DATA SAKSI');
-      $("#nama_posisi").val(jsonData.nama);
-      $("#nik_posisi").val(jsonData.nik);
-      $("#tempat_lahir_posisi").val(jsonData.tempat_lahir);
-      $("#tgl_lahir_posisi").val(jsonData.tgl_lahir);
-      $("#pekerjaan_posisi").val(jsonData.pekerjaan);
-      $("#alamat_posisi").val(jsonData.alamat);
-      $("#id_posisi").val(jsonData.id);
+      $("#nama_saksi").val(jsonData.nama);
+      $("#jabatan_saksi").val(jsonData.jabatan);
+      $("#id_saksi").val(jsonData.id);
+      
 
       document.getElementById( "btn_simpan_saksi" ).setAttribute( "onClick", "javascript: saksi_update();" );
       
@@ -583,12 +726,12 @@ function saksi_edit(id){
   });
 }
 
-function saksi_update(){
+function saksi_pelepasan_update(){
    $('#myPleaseWait').modal('show');
         
         $.ajax({
             url : '<?php echo site_url("$this->controller/saksi_update"); ?>',
-            data : $("#form_saksi").serialize(),
+            data : $("#form_saksi_pelepasan").serialize(),
             dataType : 'json',
             type : 'post',
             success : function(obj) {
@@ -603,9 +746,9 @@ function saksi_update(){
                              
                         });   
                          
-                        $("#saksi_modal").modal('hide'); 
+                        $("#saksi_pelepasan_modal").modal('hide'); 
                         $('#saksi').DataTable().ajax.reload();                       
-                        $('#form_saksi')[0].reset();
+                        $('#form_saksi_pelepasan')[0].reset();
                                 
                          
                     }

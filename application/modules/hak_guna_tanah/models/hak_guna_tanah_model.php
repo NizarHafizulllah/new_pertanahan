@@ -58,9 +58,11 @@ function get_pemilik_detail($id){
 	$this->db->select(
 		't.* '
 		)->from('pemilik_tanah t');
+
 	$this->db->where("t.id",$id);
 	$res = $this->db->get();
 	return $res->row_array();
+
 }
 
 function get_saksi_detail($id){
@@ -68,9 +70,10 @@ function get_saksi_detail($id){
 	$this->db->select(
 		't.* '
 		)->from('saksi_hak_guna_tanah t');
-	$this->db->where("t.id",$id);
+
+	$this->db->where("t.id_surat",$id);
 	$res = $this->db->get();
-	return $res->row_array();
+	return $res;
 }
 
 	 function temp_get_saksi($param)
@@ -85,11 +88,12 @@ function get_saksi_detail($id){
 
 		 $kolom = array(0=>	"id",
 		 					"temp_tanah_id",
-		 												 
+
 		 	);
 
 
 		
+
 
 		 
 		 $this->db->where("temp_id_surat", $temp_tanah_id);
@@ -107,6 +111,7 @@ function get_saksi_detail($id){
 		// echo $this->db->last_query(); exit;
  		return $res;
 	}
+
 
 	 function temp_get_pemilik($param)
 	{		
@@ -509,7 +514,7 @@ function get_posisi_utara($param)
 	}
 
 
-	
+
 
 
 }
