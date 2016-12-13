@@ -11,7 +11,7 @@
  console.log('tests');
 
     $.ajax({
-        url:'<?php echo site_url("$this->controller/simpan"); ?>',
+        url:'<?php echo site_url("$this->controller/$action"); ?>',
         data : $('#form_data').serialize(),
         type : 'post',
         dataType : 'json',
@@ -28,13 +28,18 @@
                             message: obj.message
                              
                         });   
-                      $("#nama_camat").val('');
-                      $("#nip_camat").val('');
-                      $("#jabatan_camat").val('');
-                      $("#nama").val('');
-                      $("#username").val('');
-                      $("#pass1").val('');
-                      $("#pass2").val('');
+
+
+                     if(obj.model=="I")
+                       { 
+                          $("#nama_camat").val('');
+                          $("#nip_camat").val('');
+                          $("#jabatan_camat").val('');
+                          $("#nama").val('');
+                          $("#username").val('');
+                          $("#pass1").val('');
+                          $("#pass2").val('');
+                      } 
             }
             else {
                  BootstrapDialog.alert({

@@ -17,15 +17,17 @@
 			<div class="box-body">
 				<div class="form-group">
 					<label>Desa</label>
-					<?php echo form_dropdown("desa",$arr_desa,'','id="id_desa" class="form-control select2" style="width: 100%;"'); ?>
+					<?php 
+					$desa = isset($desa)?$desa:"";
+					echo form_dropdown("desa",$arr_desa,$desa,'id="id_desa" class="form-control select2" style="width: 100%;"'); ?>
 				</div>
 				<div class="form-group">
 					<label>Nama Admin</label>
-					<input type="text" name="nama" class="form-control" placeholder="Nama Admin . ." id="nama">
+					<input type="text" name="nama" class="form-control" placeholder="Nama Admin . ." id="nama" value="<?php echo isset($nama)?$nama:""; ?>">
 				</div>
 				<div class="form-group">
 					<label>Username</label>
-					<input type="text" name="username" placeholder="Username" class="form-control" id="username">
+					<input type="text" name="username" placeholder="Username" class="form-control" id="username"  value="<?php echo isset($username)?$username:""; ?>">
 				</div>
 				<div class="form-group">
 					<label>Password</label>
@@ -52,6 +54,7 @@
 		
 	</div>
 	</div>
+	<input type="hidden" name="id" id="id"  value="<?php echo isset($id)?$id:""; ?>">
 </form>
 
 

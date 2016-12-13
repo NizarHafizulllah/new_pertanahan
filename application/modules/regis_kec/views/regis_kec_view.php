@@ -12,7 +12,7 @@
 
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Biro Jasa</h3>
+              <h3 class="box-title">Registrasi Pertanahan</h3>
               <div class="box-tools pull-right">
               </div>
             </div>

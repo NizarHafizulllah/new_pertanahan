@@ -134,6 +134,7 @@ if($this->form_validation->run() == TRUE ) {
 else {
     $arr = array("error"=>true,'message'=>validation_errors());
 }
+    $arr['mode'] = "I";
         echo json_encode($arr);
 }
 
@@ -248,8 +249,8 @@ else {
 
         $data['action'] = 'update';
          
-        $content = $this->load->view("kecamatan_add_desa_form_edit_view",$data,true);
-
+        // $content = $this->load->view("kecamatan_add_desa_form_edit_view",$data,true);
+        $content = $this->load->view("kecamatan_add_desa_form_view",$data,true);
        
 
         $this->set_subtitle("Edit Admin Desa");
@@ -276,12 +277,13 @@ function update(){
         $res = $this->db->get('admin_desa');
         $username = $res->row_array();
 
-        if ($username['username'] != $post['username']) {
-                     $this->form_validation->set_rules('username','Username','callback_cek_username');
-                  }
+        // if ($username['username'] != $post['username']) {
+        //              $this->form_validation->set_rules('username','Username','callback_cek_username');
+        //           }
 
         if (!empty($post['pass1'])) {
                       $this->form_validation->set_rules('pass1','Cek Password','callback_cek_passwd');
+                      $post['password'] = md5($post['pass1']);
 
                   }else{
                     unset($post['pass1']);
@@ -292,7 +294,7 @@ function update(){
         
         $this->form_validation->set_error_delimiters('', '<br>');
 
-        $post['password'] = md5($post['pass1']);
+        
         unset($post['pass1']);
         unset($post['pass2']);
 
@@ -315,6 +317,7 @@ if($this->form_validation->run() == TRUE ) {
 else {
     $arr = array("error"=>true,'message'=>validation_errors());
 }
+        $arr['mode'] = "U";
         echo json_encode($arr);
 }
 

@@ -31,7 +31,7 @@
  console.log('tests');
 
     $.ajax({
-        url:'<?php echo site_url("$this->controller/simpan"); ?>',
+        url:'<?php echo site_url("$this->controller/$action"); ?>',
         data : $('#form_data').serialize(),
         type : 'post',
         dataType : 'json',
@@ -42,12 +42,16 @@
             if(obj.error == false) { // berhasil 
 
                 // alert('hooooo.. error false');
-                     BootstrapDialog.alert({
+                 BootstrapDialog.alert({
                             type: BootstrapDialog.TYPE_PRIMARY,
                             title: 'Informasi',
                             message: obj.message
                              
                         });   
+
+                if(obj.mode ==  "I") { 
+
+                    
                       $("#nama_camat").val('');
                       $("#nip_camat").val('');
                       $("#jabatan_camat").val('');
@@ -55,6 +59,7 @@
                       $("#username").val('');
                       $("#pass1").val('');
                       $("#pass2").val('');
+                  }
             }
             else {
                  BootstrapDialog.alert({

@@ -110,6 +110,7 @@ function simpan(){
         $post['password'] = md5($post['pass1']);
         unset($post['pass1']);
         unset($post['pass2']);
+        unset($post['id']);
 
         
         //show_array($data);
@@ -128,6 +129,8 @@ if($this->form_validation->run() == TRUE ) {
 else {
     $arr = array("error"=>true,'message'=>validation_errors());
 }
+
+            $arr['mode'] = "I";
         echo json_encode($arr);
 }
 
@@ -218,7 +221,91 @@ else {
 
 
 
+function editdata(){
+    $id = $this->input->get('id');
+   // echo "id " . $id ;
+    $this->db->where("id",$id);
+    $data_array = $this->db->get("admin_kecamatan")->row_array();
+
+
+    $data_array['action'] = 'update';
+
+        $data_array['arr_kecamatan'] = $this->cm->arr_dropdown3("tiger_kecamatan", "id", "kecamatan", "kecamatan", "id", "19_5_1");
+       
+        $content = $this->load->view($this->controller."_form_view",$data_array,true);
+
+        $this->set_subtitle("Edit Data Admin Kecamatan");
+        $this->set_title("Edit Data Admin Kecamatan");
+        $this->set_content($content);
+        $this->cetak();
+
+}
+
  
+
+function cek_passwd2($pass1){
+    $pass2 = $this->input->post('pass2');
+ 
+    if($pass1 <> $pass2) {
+        $this->form_validation->set_message('cek_passwd2', ' Password tidak sama');
+         return false;
+    }
+}
+
+
+
+function update(){
+
+
+    $post = $this->input->post();
+    
+       
+
+
+        $this->load->library('form_validation');
+        // $this->form_validation->set_rules('nama_camat','Nama Camat','required');
+        // $this->form_validation->set_rules('nip_camat','NIP Camat','required');
+        // $this->form_validation->set_rules('jabatan_camat','Jabatan Camat','required');
+        // $this->form_validation->set_rules('nama','Nama Admin','required');  
+        $this->form_validation->set_rules('username','Username','required');
+        $this->form_validation->set_rules('pass1','Cek Password','callback_cek_passwd2');    
+        // $this->form_validation->set_rules('pelaksana_nip','NIP','required');         
+         
+        $this->form_validation->set_message('required', ' %s Harus di Isi ');
+        
+        $this->form_validation->set_error_delimiters('', '<br>');
+
+        if(!empty($post['pass1'])) {
+            $post['password'] = md5($post['pass1']);
+        }
+
+
+
+        // $post['password'] = md5($post['pass1']);
+        unset($post['pass1']);
+        unset($post['pass2']);
+        // unset($post['id']);
+
+        
+        //show_array($data);
+
+if($this->form_validation->run() == TRUE ) { 
+
+        $this->db->where("id",$post['id']);
+        $res = $this->db->update('admin_kecamatan', $post); 
+        if($res){
+            $arr = array("error"=>false,'message'=>"BERHASIL DISIMPAN");
+        }
+        else {
+             $arr = array("error"=>true,'message'=>"GAGAL  DISIMPAN");
+        }
+}
+else {
+    $arr = array("error"=>true,'message'=>validation_errors());
+}
+        $arr['mode'] = "U";
+        echo json_encode($arr);
+} 
 
 
 

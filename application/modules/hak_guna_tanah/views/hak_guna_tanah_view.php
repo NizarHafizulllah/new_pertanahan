@@ -12,9 +12,9 @@
 
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Desa</h3>
+              <h3 class="box-title">Hak Guna Tanah</h3>
               <div class="box-tools pull-right">
-              <a href="<?php echo site_url("$this->controller/baru"); ?>"><button type="button" class="btn btn-primary form-control"><i class="fa fa fa-plus-circle "></i> Register Desa</button></a>
+              <a href="<?php echo site_url("$this->controller/baru"); ?>"><button type="button" class="btn btn-primary form-control"><i class="fa fa fa-plus-circle "></i> Tambah Data</button></a>
               </div>
             </div>
             <div class="box-body">

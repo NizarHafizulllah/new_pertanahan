@@ -24,8 +24,8 @@ function index(){
 		$data_array=array();
         $content = $this->load->view($this->controller."_view",$data_array,true);
 
-        $this->set_subtitle("Registrasi Desa");
-        $this->set_title("Registrasi Desa");
+        $this->set_subtitle("Hak Guna Tanah");
+        $this->set_title("Hak Guna Tanah");
         $this->set_content($content);
         $this->cetak();
 }
