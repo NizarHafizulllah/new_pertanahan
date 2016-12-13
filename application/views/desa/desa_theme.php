@@ -147,7 +147,7 @@ folder instead of downloading all of them to reduce the load. -->
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo site_url('hak_guna_tanah'); ?>"><i class="fa fa-circle-o"></i> Surat Pengakuan Tanah</a></li>
-                <li><a href="<?php echo site_url('jual_tanah'); ?>"><i class="fa fa-circle-o"></i> Surat Penjualan Tanah</a></li>
+                
               </ul>
             </li>
           </ul>
