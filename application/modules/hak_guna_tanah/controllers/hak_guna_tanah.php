@@ -33,6 +33,11 @@ function index(){
 
 
 
+function flush(){
+                $this->session->unset_userdata("temp_tanah_id");
+                echo "cokies bersih";
+
+}
 
 
 function baru(){
@@ -47,7 +52,7 @@ function baru(){
         $temp_tanah_id = $this->session->userdata("temp_tanah_id"); 
 
         if($temp_tanah_id == "") {
-            $xx = md5(date("dmyhis").round(0,100)); 
+            $xx = md5(date("dmyhis").round(0,100).microtime()); 
             $this->session->set_userdata("temp_tanah_id",$xx);
             $temp_tanah_id = $this->session->userdata("temp_tanah_id"); 
         }
@@ -486,6 +491,13 @@ function simpan(){
         // $post['tgl_lhr_pemilik'] = flipdate($post['tgl_lhr_pemilik']);
         $post['tgl_pernyataan'] = flipdate($post['tgl_pernyataan']);
         $post['tgl_register_desa'] = flipdate($post['tgl_register_desa']);
+
+        $post['tgl_keterangan'] = flipdate($post['tgl_keterangan']);
+        $post['tgl_berita_acara'] = flipdate($post['tgl_berita_acara']);
+
+
+        
+    
         
         $post['desa_tanah'] = $userdata['desa'];
         $post['kec_tanah'] = $userdata['kecamatan'];
@@ -511,7 +523,9 @@ function simpan(){
                             'desa_tanah' =>  $post['desa_tanah'],
                             'kec_tanah' =>  $post['kec_tanah'],
                             'no_surat_terakhir' => $post['no_ket_desa'],
-                            'kegiatan_terakhir' => 'Pengakuan Atas Tanah');
+                            'kegiatan_terakhir' => 'Pengakuan Atas Tanah'
+                            
+                            );
 
         $data_surat = array('nama_pengukur_satu' =>  $post['saksi_lima_nama'],
                             'umur_pengukur_satu' =>  $post['saksi_lima_umur'],
@@ -541,6 +555,8 @@ function simpan(){
                             'panjang_batas_selatan' =>  $post['panjang_batas_selatan'],
                             'panjang_batas_utara' =>  $post['panjang_batas_utara'],
                             'tgl_pernyataan' =>  $post['tgl_pernyataan'],
+                            'tgl_keterangan'  => $post['tgl_keterangan'],
+                            'tgl_berita_acara' => $post['tgl_berita_acara']
                             );
 
         //show_array($data);
@@ -1830,6 +1846,8 @@ function get_saksi_detail($id){
          // $data['tgl_lhr_pemilik'] = flipdate($data['tgl_lhr_pemilik']);
          $data['tgl_pernyataan'] = flipdate($data['tgl_pernyataan']);
          $data['tgl_register_desa'] = flipdate($data['tgl_register_desa']);
+         $data['tgl_keterangan'] = flipdate($data['tgl_keterangan']);
+         $data['tgl_berita_acara'] = flipdate($data['tgl_berita_acara']);
          $data['json_url_pemilik'] = site_url("$this->controller/get_pemilik");
          $data['json_url_saksi'] = site_url("$this->controller/get_saksi");
          $data['json_url_posisi_barat'] = site_url("$this->controller/get_posisi_barat");
@@ -1891,6 +1909,8 @@ function update(){
     $post = $this->input->post();
     $id_tanah = $this->session->userdata('tanah_id');
     $userdata = $this->session->userdata('desa_login');
+    $post['tgl_keterangan'] = flipdate($post['tgl_keterangan']);
+    $post['tgl_berita_acara'] = flipdate($post['tgl_berita_acara']);
    // echo $id_tanah;
 
     $this->db->where('id', $userdata['desa']);
@@ -1906,7 +1926,9 @@ function update(){
                             'status_tanah' => $post['status_tanah'],
                             'sejak_kuasa_tanah' => $post['sejak_kuasa_tanah'],
                             'guna_tanah' => $post['guna_tanah'],
-                            'tanaman' => $post['tanaman'],);
+                            'tanaman' => $post['tanaman']
+
+                           );
 
      $data_surat = array('nama_pengukur_satu' =>  $post['saksi_lima_nama'],
                             'umur_pengukur_satu' =>  $post['saksi_lima_umur'],
@@ -1932,6 +1954,9 @@ function update(){
                             'panjang_batas_selatan' =>  $post['panjang_batas_selatan'],
                             'panjang_batas_utara' =>  $post['panjang_batas_utara'],
                             'tgl_pernyataan' =>  flipdate($post['tgl_pernyataan']),
+                            'no_register_desa' => $post['no_register_desa'],
+                            'tgl_keterangan'  => $post['tgl_keterangan'],
+                            'tgl_berita_acara' => $post['tgl_berita_acara']
                             );
 
 // show_array($data_surat);

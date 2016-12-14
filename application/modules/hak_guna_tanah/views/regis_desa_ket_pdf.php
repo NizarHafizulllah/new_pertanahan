@@ -107,7 +107,7 @@
   <tr>
     <td width="6%">&nbsp;</td>
     <td width="3%" align="left" valign="top">1.</td>
-    <td width="91%" align="justify"><p>Bahwa berdasarkan Surat Pernyataan Penguasaan Fisik Bidang Tanah tanggal <?php echo flipdate($tgl_pernyataan); ?>, diketahui Kepala Desa <?php echo $desa_tanah.' tanggal '.flipdate($tgl_register_desa).' No. '.$no_register_desa; ?> berupa tanah <?php echo $guna_tanah; ?> yang terletak di <?php echo $dusun_tanah ?> Desa 
+    <td width="91%" align="justify"><p>Bahwa berdasarkan Surat Pernyataan Penguasaan Fisik Bidang Tanah tanggal <?php echo flipdate($tgl_keterangan); ?>, diketahui Kepala Desa <?php echo $desa_tanah.' tanggal '.flipdate($tgl_register_desa).' No. '.$no_register_desa; ?> berupa tanah <?php echo $guna_tanah; ?> yang terletak di <?php echo $dusun_tanah ?> Desa 
         <?php echo $desa_tanah; ?> 
         Kecamatan <?php echo $kec_tanah; ?> Kabupaten <?php echo $kab_tanah; ?> dengan luas ± &nbsp;&nbsp;&nbsp;&nbsp;
         

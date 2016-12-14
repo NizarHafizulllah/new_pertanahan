@@ -1,0 +1,16 @@
+
+
+create table pelepasan_pihak_pertama (
+id int primary key auto_increment, 
+nama varchar(100), 
+tgl_lahir date, 
+warga_negara varchar(100),
+status_kawin char(5),
+pekerjaan varchar(100),
+alamat varchar(255),
+rt char(10),
+rw char(10),
+jk char(20),
+id_desa char(13),
+temp_id_surat char(32)
+); 

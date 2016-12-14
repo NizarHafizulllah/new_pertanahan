@@ -56,6 +56,25 @@
                       <div class="col-md-10">
                       <input type="text" id="tanggal" name="tgl_pernyataan" class="tanggal ui-datepicker form-control" placeholder="Tanggal Pernyataan"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_pernyataan)?$tgl_pernyataan:''; ?>"></div>
                     </div>
+
+                    <div class="form-group">
+                    <div class="col-md-2">
+                      <label>Tanggal Surat Keterangan</label>
+                    </div>
+                      <div class="col-md-10">
+                      <input type="text" id="tanggal" name="tgl_keterangan" class="tanggal ui-datepicker form-control" placeholder="Tanggal Pernyataan"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_keterangan)?$tgl_keterangan:''; ?>"></div>
+                    </div>
+
+
+                    <div class="form-group">
+                    <div class="col-md-2">
+                      <label>Tanggal Berita Acara</label>
+                    </div>
+                      <div class="col-md-10">
+                      <input type="text" id="tanggal" name="tgl_berita_acara" class="tanggal ui-datepicker form-control" placeholder="Tanggal Pernyataan"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_berita_acara)?$tgl_berita_acara:''; ?>"></div>
+                    </div>
+
+
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
 
@@ -336,12 +355,12 @@
                       <div class="form-group">
                       <label class="col-md-2">No. Registrasi</label>
                       <div class="col-md-10">
-                      <input type="text" name="no_register_desa" id="no_register_desa" class="form-control" placeholder="No Registrasi ..." value="<?php echo isset($no_register_desa)?$no_register_desa:''; ?>" disabled>
+                      <input type="text" name="no_register_desa" id="no_register_desa" class="form-control" placeholder="No Registrasi ..." value="<?php echo isset($no_register_desa)?$no_register_desa:''; ?>" >
                       </div><!-- /.box-body -->
               </div><!-- /.box -->
               
               <button style="border-radius: 9px;" id="tombolsubmitupdate" class="btn btn-block btn-primary btn-lg">Simpan</button>
-              <a style="border-radius: 9px;" href="<?php echo site_url('regis_desa'); ?>" class='btn btn-block btn-danger btn-lg'>Batal</a>
+              <a style="border-radius: 9px;" href="<?php echo site_url("$this->controller"); ?>" class='btn btn-block btn-danger btn-lg'>Batal</a>
                     </div>
                     <?php 
                     }

@@ -19,6 +19,21 @@ function surat_add() {
 }
 
 
+
+
+function pihak_pertama_add() {
+     
+    $('#pihak_pertama_modal').modal('show');
+    $("#PihakPertamaModal").html('TAMBAH DATA PIHAK PERTAMA');
+                         //  $('#nama_saksi').val('');
+                         // $('jabatan_saksi').val('');
+ 
+  $("#form_pihak_pertama").attr('action','<?php echo $pihak_pertama_add_url; ?>');
+    
+    
+
+}
+
 function saksi_pelepasan_add() {
      
     $('#saksi_pelepasan_modal').modal('show');
@@ -77,6 +92,54 @@ function saksi_pelepasan_simpan(){
                         $('#form_saksi_pelepasan')[0].reset();
                         $('#nama_saksi').val('');
                          $('#jabatan_saksi').val('');
+                            
+                         
+                    }
+                    else {
+                         BootstrapDialog.alert({
+                            type: BootstrapDialog.TYPE_DANGER,
+                            title: 'Error',
+                            message: obj.message ,
+                             
+                        }); 
+                    }
+            }
+        });
+        return false;
+}
+
+
+
+
+
+function pihak_pertama_simpan(){
+
+  // alert('pihak pertamasimpan');
+
+    $('#myPleaseWait').modal('show');
+        
+        $.ajax({
+            url : $("#form_pihak_pertama").attr('action'),
+            data : $("#form_pihak_pertama").serialize(),
+            dataType : 'json',
+            type : 'post',
+            success : function(obj) {
+                $('#myPleaseWait').modal('hide');
+                 console.log(obj);
+                if(obj.error==false){
+                         
+                         BootstrapDialog.alert({
+                            type: BootstrapDialog.TYPE_PRIMARY,
+                            title: 'Informasi',
+                            message: obj.message,
+                             
+                        });   
+                         
+                        $("#pihak_pertama_modal").modal('hide'); 
+                        $('#pihak_pertama').DataTable().ajax.reload();                       
+                        $('#form_pihak_pertama')[0].reset();
+                        // $('#nama_saksi').val('');
+                        //  $('#jabatan_saksi').val('');
                             
                          
                     }
@@ -213,6 +276,16 @@ function surat_simpan(){
                 "processing": true,
                 "serverSide": true,
                 "ajax": '<?php echo $json_url_saksi ?>'
+            });
+
+
+     var dt = $("#pihak_pertama").DataTable(
+            {
+
+                "columnDefs": [ { "targets": 0, "orderable": false } ],
+                "processing": true,
+                "serverSide": true,
+                "ajax": '<?php echo $json_url_pihak_pertama ?>'
             });
 
 
@@ -607,6 +680,67 @@ BootstrapDialog.show({
 
 }
 
+
+
+function hapus_pihak_pertama(id){
+
+
+
+BootstrapDialog.show({
+            message : 'ANDA AKAN MENGHAPUS DATA PIHAK PERTAMA. ANDA YAKIN  ?  ',
+            title: 'KONFIRMASI HAPUS DATA PIHAK PERTAMA',
+            draggable: true,
+            buttons : [
+              {
+                label : 'YA',
+                cssClass : 'btn-primary',
+                hotkey: 13,
+                action : function(dialogItself){
+
+
+                  dialogItself.close();
+                  $('#myPleaseWait').modal('show'); 
+                  $.ajax({
+                    url : '<?php echo site_url("$this->controller/hapus_pihak_pertama") ?>',
+                    type : 'post',
+                    data : {id : id},
+                    dataType : 'json',
+                    success : function(obj) {
+                        $('#myPleaseWait').modal('hide'); 
+                        if(obj.error==false) {
+                                BootstrapDialog.alert({
+                                      type: BootstrapDialog.TYPE_PRIMARY,
+                                      title: 'Informasi',
+                                      message: obj.message,
+                                       
+                                  });   
+
+                            $('#saksi').DataTable().ajax.reload();     
+                        }
+                        else {
+                            BootstrapDialog.alert({
+                                  type: BootstrapDialog.TYPE_DANGER,
+                                  title: 'Error',
+                                  message: obj.message,
+                                   
+                              }); 
+                        }
+                    }
+                  });
+
+                }
+              },
+              {
+                label : 'TIDAK',
+                cssClass : 'btn-danger',
+                action: function(dialogItself){
+                    dialogItself.close();
+                }
+              }
+            ]
+          });
+
+}
 
 
 function hapus(id){

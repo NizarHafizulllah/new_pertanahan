@@ -38,13 +38,13 @@ class pelepasan_tanah_model extends CI_Model {
 		 $this->db->select('p.*, ds.desa as nm_desa');
 
 		 	$this->db->from("pelepasan p");
-		 	$this->db->join('tiger_desa ds','p.desa=ds.id');
+		 	$this->db->join('tiger_desa ds','p.desa=ds.id','left');
 		 	
 		 	
 		
 
 		 
-		 $this->db->where("id_desa", $id_desa);
+		 $this->db->where("p.desa", $id_desa);
 
 
 		 
@@ -208,7 +208,7 @@ function get_saksi_detail($id){
 	}
 
 
-	 function temp_get_saksi($param)
+function temp_get_saksi($param)
 	{		
 
 		// show_array($param);
@@ -244,11 +244,49 @@ function get_saksi_detail($id){
  		return $res;
 	}
 
-	
+
+function temp_get_pihak_pertama($param)
+	{		
+
+		// show_array($param);
+		// exit;
+
+		 extract($param);
+
+		 
+
+		 $kolom = array(0=>	"id",
+		 					"nama",
+		 					"alamat",
+		 					"umur",
+
+		 												 
+		 	);
+
+
+		
+
+		 
+		 $this->db->where("temp_id_surat", $temp_id_surat);
+
+
+		 
+
+		
+
+		($param['limit'] != null ? $this->db->limit($param['limit']['end'], $param['limit']['start']) : '');
+		//$this->db->limit($param['limit']['end'], $param['limit']['start']) ;
+       
+       ($param['sort_by'] != null) ? $this->db->order_by($kolom[$param['sort_by']], $param['sort_direction']) :'';
+        
+		$res = $this->db->get('pelepasan_pihak_pertama');
+		// echo $this->db->last_query(); exit;
+ 		return $res;
+	}	
 
 
 	
-
+// temp_get_pihak_pertama
 
 }
 

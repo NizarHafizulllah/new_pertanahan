@@ -19,14 +19,17 @@ class Login extends CI_Controller {
 	
 	function logout_admin(){
 		$this->session->unset_userdata("admin_login",true);
+		$this->session->unset_userdata("temp_tanah_id");
 		redirect("login");
 	}
 	function logout_kecamatan(){
 		$this->session->unset_userdata("kec_login",true);
+		$this->session->unset_userdata("temp_tanah_id");
 		redirect("login");
 	}
 	function logout_desa(){
 		$this->session->unset_userdata("desa_login",true);
+		$this->session->unset_userdata("temp_tanah_id");
 		redirect("login");
 	}
 	

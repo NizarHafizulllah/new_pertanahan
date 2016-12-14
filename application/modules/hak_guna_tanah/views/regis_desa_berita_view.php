@@ -72,7 +72,7 @@
 
 <table width="100%">
 <tr>
-  <td width="98%" height="24" align="justify"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada tanggal <?php echo flipdate($tgl_register_desa); ?> telah dilakukan pengukuran ulang sebidang tanah yang terletak di <?php echo $dusun_tanah.' Desa '.$desa_tanah.' Kecamatan '.$kec_tanah.' Kabupaten '.$kab_tanah; ?> dilakukan pemeriksaan atas fisik tanah berdasarkan permohonan dari : </p></td>
+  <td width="98%" height="24" align="justify"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada tanggal <?php echo tgl_indo(flipdate($tgl_register_desa)); ?> telah dilakukan pengukuran ulang sebidang tanah yang terletak di <?php echo $dusun_tanah.' Desa '.$desa_tanah.' Kecamatan '.$kec_tanah.' Kabupaten '.$kab_tanah; ?> dilakukan pemeriksaan atas fisik tanah berdasarkan permohonan dari : </p></td>
 </tr>
 </table>
 
@@ -91,7 +91,7 @@
       <tr>
         <td >&nbsp;</td>
         <td >Tempat Tanggal Lahir</td>
-        <td>: <?php echo $row->tempat_lahir.', '.$row->tgl_lahir; ?> </td>
+        <td>: <?php echo $row->tempat_lahir.', '.tgl_indo(flipdate($row->tgl_lahir)); ?> </td>
       </tr>
       <tr>
         <td >&nbsp;</td>
@@ -203,7 +203,7 @@
   <tr>
     <td width="3%">&nbsp;</td>
     <td width="55%">Saksi Perbatasan</td>
-    <td width="42%"><?php echo $desa_tanah.', '.$tgl_pernyataan ?></td>
+    <td width="42%"><?php echo $desa_tanah.', '.tgl_indo(flipdate($tgl_berita_acara)); ?></td>
   </tr>
 </table>
 

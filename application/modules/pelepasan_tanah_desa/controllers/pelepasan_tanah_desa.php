@@ -57,13 +57,23 @@ function baru(){
         // echo $this->session->userdata("temp_lap_a_id");  exit;
         $data_array['json_url_surat'] = site_url("$this->controller/temp_get_surat");
         $data_array['json_url_saksi'] = site_url("$this->controller/temp_get_saksi");
+        $data_array['json_url_pihak_pertama'] = site_url("$this->controller/temp_get_pihak_pertama");
+
+
+
+
         //$this->session->unset_userdata("temp_lap_a_id");
         $data_array['temp_id_surat']=$temp_id_surat;
         $data_array['surat_add_url'] = site_url("$this->controller/tmp_surat_simpan");
         $data_array['saksi_pelepasan_add_url'] = site_url("$this->controller/tmp_saksi_simpan");
         $data_array['surat_pelepasan_add_url'] = site_url("$this->controller/tmp_surat_pelepasam_simpan");
+
+        $data_array['pihak_pertama_add_url'] = site_url("$this->controller/tmp_pihak_pertama_simpan");
+
+
+
         $data_array['arr_jk'] = array('l' => 'Laki-laki', 'p' => 'Perempuan');
-        $data_array['arr_kawin'] = array('k' => 'Kawin', 'tk' => 'Tidak Kawin');
+        $data_array['arr_kawin'] = array('k' => 'Kawin', 'tk' => 'Tidak Kawin','ch'=>"Cerai Hidup",'cm'=>"Cerai Mati");
 
         // show_array($temp_tanah_id);
 
@@ -231,6 +241,7 @@ function hapus_session(){
                               </button>
                               <ul class='dropdown-menu' role='menu'>
                                 <li><a href='#'  onclick=\"printsurat('$id')\"><i class='fa fa-print'></i> Print Surat</a></li>
+                                <li><a href='#'  onclick=\"printsurat('$id')\"><i class='fa fa-print'></i> Cetak Rekomendasi</a></li>
                                 <li><a href='#' onclick=\"hapus('$id')\" ><i class='fa fa-trash'></i> Hapus</a></li>
                                 <li><a href='pelepasan_tanah/editdata?id=$id'><i class='fa fa-edit'></i> Edit</a></li>
 
@@ -474,6 +485,110 @@ function get_saksi_detail($id){
          
         echo json_encode($responce); 
     }
+
+
+
+ function temp_get_pihak_pertama() {
+
+        
+        // show_array($userdata);
+
+        $draw = $_REQUEST['draw']; // get the requested page 
+        $start = $_REQUEST['start'];
+        $limit = $_REQUEST['length']; // get how many rows we want to have into the grid 
+        $sidx = isset($_REQUEST['order'][0]['column'])?$_REQUEST['order'][0]['column']:0; // get index row - i.e. user click to sort 
+        $sord = isset($_REQUEST['order'][0]['dir'])?$_REQUEST['order'][0]['dir']:"asc"; // get the direction if(!$sidx) $sidx =1;  
+        
+  
+        
+        
+
+        $userdata = $this->session->userdata('desa_login');
+        $kecamatan = $userdata['kecamatan'];
+
+
+
+        // $this->db->where('desa_tanah', $desa);
+        
+
+        $temp_id_surat = $this->session->userdata('temp_id_surat');
+        
+
+
+      //  order[0][column]
+        $req_param = array (
+                "sort_by" => $sidx,
+                "sort_direction" => $sord,
+                "limit" => null,
+                "temp_id_surat" => $temp_id_surat,
+                "kecamatan" => $kecamatan,
+                
+                 
+        );     
+           
+        $row = $this->dm->temp_get_pihak_pertama($req_param)->result_array();
+        
+        $count = count($row); 
+       
+        
+        $req_param['limit'] = array(
+                    'start' => $start,
+                    'end' => $limit
+        );
+          
+        
+        $result = $this->dm->temp_get_pihak_pertama($req_param)->result_array();
+        
+
+       
+        $arr_data = array();
+        foreach($result as $row) : 
+        $id = $row['id'];
+        
+        
+
+       
+            
+
+            
+            $action = "<div class='btn-group'>
+                              <button type='button' class='btn btn-primary'>Action</button>
+                              <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>
+                                <span class='caret'></span>
+                                <span class='sr-only'>Toggle Dropdown</span>
+                              </button>
+                              <ul class='dropdown-menu' role='menu'>
+                                <li><a href='#' onclick=\"hapus_saksi('$id')\" ><i class='fa fa-trash'></i> Hapus</a></li>
+                                <li><a href='#' onclick=\"saksi_edit('$id')\" ><i class='fa fa-edit'></i> Edit</a></li>
+                              </ul>
+                            </div>";
+
+            
+            
+       
+            
+        // $row['tgl_register_desa'] = flipdate($row['tgl_register_desa']);
+             
+            $arr_data[] = array(
+                $row['nama'],
+                $row['alamat'],
+                $row['umur'],
+                $row['pekerjaan'],
+                $action,
+                
+                     
+                                );
+        endforeach;
+
+         $responce = array('draw' => $draw, // ($start==0)?1:$start,
+                          'recordsTotal' => $count, 
+                          'recordsFiltered' => $count,
+                          'data'=>$arr_data
+            );
+         
+        echo json_encode($responce); 
+    }
+
 
 
  function temp_get_surat() {
@@ -1119,7 +1234,61 @@ else {
         echo json_encode($arr);
 }
 
+function tmp_pihak_pertama_simpan() {
 
+    // $userdata = $this->session->userdata('kec_login');
+    
+    $post = $this->input->post();
+    //     $post['nama_surat'] = "Penyerahan/Pelepasan Hak Atas Tanah";
+    // $post['jenis_surat'] = "Pelepasan";
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('nama','Nama','required');   
+        $this->form_validation->set_rules('alamat','Alamat','required');   
+        $this->form_validation->set_rules('id_desa','Desa/Kelurahan','required'); 
+        $this->form_validation->set_rules('id_kecamatan','Kecamtan','required'); 
+        
+    $temp_id_surat = $this->session->userdata('temp_id_surat');
+    
+    $post['temp_id_surat'] = $temp_id_surat;
+         
+        $this->form_validation->set_message('required', ' %s Harus diisi ');
+        
+        $this->form_validation->set_error_delimiters('', '<br>');
+       
+        
+        // show_array($post);
+        // exit();
+
+       unset($post['id']); //show_array($data);
+
+if($this->form_validation->run() == TRUE ) { 
+
+        // $userdata = $this->session->userdata('desa_login');
+        // $post['kades'] = $userdata['kepala_desa'];
+        // $post['tgl_surat_kec'] = flipdate($post['tgl_surat_kec']);
+        $post['tgl_lahir'] = flipdate($post['tgl_lahir']);
+        $post['umur'] = $this->cm->umur($post['tgl_lahir']);
+
+        // show_array($post);
+        
+        $res = $this->db->insert('pelepasan_pihak_pertama', $post); 
+        if($res){
+            
+            $arr = array("error"=>false,'message'=>"BERHASIL DISIMPAN");
+        }
+        else {
+             $arr = array("error"=>true,'message'=>"GAGAL  DISIMPAN");
+        }
+}
+else {
+    $arr = array("error"=>true,'message'=>validation_errors());
+}
+        echo json_encode($arr);
+
+
+
+}
 
 function tmp_surat_pelepasam_simpan(){
 

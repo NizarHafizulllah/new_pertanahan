@@ -74,7 +74,7 @@
       <tr>
         <td >&nbsp;</td>
         <td >Tempat Tanggal Lahir </td>
-        <td>: <?php echo $row->tempat_lahir.', '.flipdate($row->tgl_lahir); ?> </td>
+        <td>: <?php echo $row->tempat_lahir.', '.tgl_indo(flipdate($row->tgl_lahir)); ?> </td>
       </tr>
       <tr>
         <td >&nbsp;</td>
@@ -233,7 +233,7 @@
     <table width="100%" border="0" cellpadding="0">
       <tr>
         <td width="65%">&nbsp;</td>
-        <td width="35%" align="center"><?php echo $desa_tanah.' '.flipdate($tgl_pernyataan); ?></td>
+        <td width="35%" align="center"><?php echo $desa_tanah.', '.tgl_indo(flipdate($tgl_pernyataan)); ?></td>
       </tr>
       <tr>
         <td width="65%">&nbsp;</td>
@@ -394,16 +394,16 @@
   <tr>
     <td width="6%">&nbsp;</td>
     <td width="18%">Nomor</td>
-    <td width="27%">: <?php echo $no_register_kecamatan; ?></td>
+    <td width="27%">: <?php //echo $no_register_kecamatan; ?></td>
     <td width="21%">Nomor</td>
     <td width="28%">: <?php echo $no_register_desa ?></td>
   </tr> 
   <tr>
     <td>&nbsp;</td>
     <td>Tanggal</td>
-    <td>: <?php echo flipdate($tgl_register_kecamatan); ?></td>
+    <td>: <?php echo tgl_indo(flipdate($tgl_register_kecamatan)); ?></td>
     <td>Tanggal</td>
-    <td>: <?php echo flipdate($tgl_register_desa); ?> </td>
+    <td>: <?php echo tgl_indo(flipdate($tgl_register_desa)); ?> </td>
   </tr> 
   <tr>
     <td>&nbsp;</td>
