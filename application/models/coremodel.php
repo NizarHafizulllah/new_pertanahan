@@ -106,5 +106,16 @@ function umur($tanggal) {
     return $from->diff($to)->y;
 }
 
+function get_data_desa(){
+     $userdata = $this->session->userdata('desa_login');
+     $this->db->where("id",$userdata['desa']);
+     $desa = $this->db->get("tiger_desa")->row_array();
+
+     $desa['nama_lembaga'] = ($desa['jenis_wilayah']=="desa")?"PEMERINTAH DESA":"KELURAHAN";
+     return $desa;
+
+}
+
+
 }
 ?>

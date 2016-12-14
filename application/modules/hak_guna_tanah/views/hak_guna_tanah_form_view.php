@@ -57,12 +57,41 @@
                       <input type="text" id="tanggal" name="tgl_pernyataan" class="tanggal ui-datepicker form-control" placeholder="Tanggal Pernyataan"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_pernyataan)?$tgl_pernyataan:''; ?>"></div>
                     </div>
 
+<!-- 
+<input type="hidden" name="no_ket_desa" id="no_ket_desa"   >
+<input type="hidden" name="no_berita_acara_desa" id="no_berita_acara_desa" ></div>
+
+ -->
+
+                    <div class="form-group">
+                    <div class="col-md-2">
+                      <label>Nomor  Surat Keterangan</label>
+                    </div>
+                      <div class="col-md-10">
+                      <input type="text" name="no_ket_desa" id="no_ket_desa" class="form-control" placeholder="Nomor surat keterangan"   >
+
+                      </div>
+                    </div>
+
+
+
                     <div class="form-group">
                     <div class="col-md-2">
                       <label>Tanggal Surat Keterangan</label>
                     </div>
                       <div class="col-md-10">
-                      <input type="text" id="tanggal" name="tgl_keterangan" class="tanggal ui-datepicker form-control" placeholder="Tanggal Pernyataan"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_keterangan)?$tgl_keterangan:''; ?>"></div>
+                      <input type="text" id="tanggal" name="tgl_keterangan" class="tanggal ui-datepicker form-control" placeholder="Tanggal surat keterangan"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_keterangan)?$tgl_keterangan:''; ?>"></div>
+                    </div>
+
+
+                    <div class="form-group">
+                    <div class="col-md-2">
+                      <label>Nomor berita acara</label>
+                    </div>
+                      <div class="col-md-10">
+                      <input type="text" name="no_berita_acara_desa" id="no_berita_acara_desa" class="form-control" placeholder="Nomor Berita Acara"   >
+
+                      </div>
                     </div>
 
 
@@ -71,7 +100,7 @@
                       <label>Tanggal Berita Acara</label>
                     </div>
                       <div class="col-md-10">
-                      <input type="text" id="tanggal" name="tgl_berita_acara" class="tanggal ui-datepicker form-control" placeholder="Tanggal Pernyataan"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_berita_acara)?$tgl_berita_acara:''; ?>"></div>
+                      <input type="text" id="tanggal" name="tgl_berita_acara" class="tanggal ui-datepicker form-control" placeholder="Tanggal Berita Acara"  data-date-format="dd-mm-yyyy" value="<?php echo isset($tgl_berita_acara)?$tgl_berita_acara:''; ?>"></div>
                     </div>
 
 
@@ -342,8 +371,7 @@
                       <label class="col-md-2">No. Registrasi</label>
                       <div class="col-md-10">
                       <input type="text" name="no_register_desa" id="no_register_desa" class="form-control" placeholder="No Registrasi ..."  >
-                      <input type="hidden" name="no_ket_desa" id="no_ket_desa"   >
-                      <input type="hidden" name="no_berita_acara_desa" id="no_berita_acara_desa" ></div>
+                      
                     </div>
                     </div><!-- /.box-body -->
                     </div><!-- /.box -->

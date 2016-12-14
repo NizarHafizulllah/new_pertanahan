@@ -430,7 +430,7 @@ else {
 
 function simpan(){
 
-
+    $data_desa = $this->cm->get_data_desa();
 
     $userdata = $this->session->userdata('desa_login');
 
@@ -527,6 +527,8 @@ function simpan(){
                             
                             );
 
+        
+
         $data_surat = array('nama_pengukur_satu' =>  $post['saksi_lima_nama'],
                             'umur_pengukur_satu' =>  $post['saksi_lima_umur'],
                             'pekerjaan_pengukur_satu' =>  $post['saksi_lima_pekerjaan'],
@@ -542,6 +544,9 @@ function simpan(){
                             'no_ket_desa' =>  $post['no_ket_desa'],
                             'no_berita_acara_desa' =>  $post['no_berita_acara_desa'],
                             'nama_kades' =>  $post['kades'],
+                            'nip_kades' =>  $data_desa['nip'],
+                            'pangkat_kades' =>  $data_desa['pangkat'],
+
                             'id_desa' =>  $post['desa_tanah'],
                             'id_kecamatan' =>  $post['kec_tanah'],
                             'status' =>  $post['status'],
@@ -556,7 +561,8 @@ function simpan(){
                             'panjang_batas_utara' =>  $post['panjang_batas_utara'],
                             'tgl_pernyataan' =>  $post['tgl_pernyataan'],
                             'tgl_keterangan'  => $post['tgl_keterangan'],
-                            'tgl_berita_acara' => $post['tgl_berita_acara']
+                            'tgl_berita_acara' => $post['tgl_berita_acara'] 
+
                             );
 
         //show_array($data);
@@ -589,17 +595,7 @@ if($this->form_validation->run() == TRUE ) {
             $this->db->where('temp_id_surat', $temp_tanah_id);
             $this->db->update('saksi_hak_guna_tanah', $saksi_arr);
 
-            // $this->db->where('emp_id_tanah', $temp_tanah_id);
-            // $this->db->update('batas_barat', $arr_update);
-
-            // $this->db->where('temp_id_tanah', $temp_tanah_id);
-            // $this->db->update('batas_timur', $arr_update);
-
-            // $this->db->where('temp_id_tanah', $temp_tanah_id);
-            // $this->db->update('batas_selatan', $arr_update);
-
-            // $this->db->where('temp_id_tanah', $temp_tanah_id);
-            // $this->db->update('batas_utara', $arr_update);
+            
 
             $this->session->unset_userdata("temp_tanah_id");
             $arr = array("error"=>false,'message'=>"BERHASIL DISIMPAN");
@@ -716,9 +712,11 @@ function hapus_session(){
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                               <ul class="dropdown-menu" role="menu">
+                                <li><a href="#"  onclick=\'printber('.$id.')\'><i class="fa fa-print"></i> Berita Acara</a></li>
+                              
                                 <li><a href="#"  onclick=\'printper('.$id.')\'><i class="fa fa-print"></i> Surat Pernyataan</a></li>
                                 <li><a href="#"  onclick=\'printket('.$id.')\'><i class="fa fa-print"></i> Surat Keterangan</a></li>
-                                <li><a href="#"  onclick=\'printber('.$id.')\'><i class="fa fa-print"></i> Berita Acara</a></li>
+                                
                               </ul>
                             </div>';
         }
@@ -1906,6 +1904,7 @@ function get_saksi_detail($id){
 
 function update(){
 
+    $data_desa = $this->cm->get_data_desa();
     $post = $this->input->post();
     $id_tanah = $this->session->userdata('tanah_id');
     $userdata = $this->session->userdata('desa_login');
@@ -1956,7 +1955,9 @@ function update(){
                             'tgl_pernyataan' =>  flipdate($post['tgl_pernyataan']),
                             'no_register_desa' => $post['no_register_desa'],
                             'tgl_keterangan'  => $post['tgl_keterangan'],
-                            'tgl_berita_acara' => $post['tgl_berita_acara']
+                            'tgl_berita_acara' => $post['tgl_berita_acara'],
+                            'nip_kades' =>  $data_desa['nip'],
+                            'pangkat_kades' =>  $data_desa['pangkat']
                             );
 
 // show_array($data_surat);

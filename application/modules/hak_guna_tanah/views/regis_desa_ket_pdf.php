@@ -34,6 +34,7 @@
 </style>
 
 <?php $userdata = $this->session->userdata('desa_login'); 
+$data_desa = $this->cm->get_data_desa();
 ?>
 
 <table width="100%" border="0" cellpadding="3">
@@ -43,7 +44,7 @@
     <td width="54%" align="center"><p><span class="judul">PEMERINTAH KABUPATEN <?php echo $kab_tanah ;?><br />
       KECAMATAN <?php echo $kec_tanah ;?><br />
       <?php if ($jenis_wilayah=='desa') {?>
-        KANTOR PEMERINTAH DESA <?php echo $desa_tanah ;?></span></p>
+        <?php echo $data_desa['nama_lembaga'] . " ".$desa_tanah; ?></span></p>
       <?php }else{ ?>
         KELURAHAN <?php echo $desa_tanah ;?></span></p>
         <?php } ?>
@@ -334,22 +335,22 @@
     <td width="19%">&nbsp;</td>
     <td width="15%">&nbsp;</td>
     <td width="6%">&nbsp;</td>
-    <td width="43%"><div align="center"> <?php echo $panjang_batas_utara ?></div></td>
+    <td width="43%"><div align="center"> <?php // echo $panjang_batas_utara ?></div></td>
     <td width="16%">&nbsp;</td>
   </tr>
   <tr>
     <td height="58">&nbsp;</td>
-    <td rowspan="3" valign="middle"><img src="<?php echo base_url()."assets/images/arah.jpg" ?>" alt="" width="186" height="147" align="center" /></td>
+    <td rowspan="3" valign="middle"><!-- <img src="<?php echo base_url()."assets/images/arah.jpg" ?>" alt="" width="186" height="147" align="center" /> --></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td rowspan="3"> <img src="<?php echo base_url()."assets/images/kotak.png" ?>" alt="" width="448" height="448" align="center" /></td>
+    <td rowspan="3"> </td>
     <td align="left" valign="middle">&nbsp;</td>
   </tr>
   <tr>
     <td height="24">&nbsp;</td>
     <td>&nbsp;</td>
-    <td> <?php echo $panjang_batas_barat ?></td>
-    <td align="left" valign="middle"> <?php echo $panjang_batas_timur ?></td>
+    <td> <?php //echo $panjang_batas_barat ?></td>
+    <td align="left" valign="middle"> <?php // echo $panjang_batas_timur ?></td>
   </tr>
   <tr>
     <td height="54">&nbsp;</td>
@@ -362,7 +363,7 @@
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td><div align="center"><?php echo $panjang_batas_selatan ?></div></td>
+    <td><div align="center"><?php // echo $panjang_batas_selatan ?></div></td>
     <td>&nbsp;</td>
   </tr>
 </table>
@@ -379,25 +380,25 @@
     <td width="6%">&nbsp;</td>
     <td width="3%">&nbsp;</td>
     <td width="24%">Sebelah Utara</td>
-    <td width="67%">: <?php echo $panjang_batas_utara.' Meter berbatasan dengan tanah '.$nama_batas_utara; ?> </td>
+    <td width="67%">: <?php  echo $panjang_batas_utara.' Meter berbatasan dengan tanah '.$nama_batas_utara; ?> </td>
   </tr>
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>Sebelah Selatan</td>
-    <td>: <?php echo $panjang_batas_selatan.' berbatasan dengan tanah '.$nama_batas_selatan; ?> </td>
+    <td>: <?php  echo $panjang_batas_selatan.' berbatasan dengan tanah '.$nama_batas_selatan; ?> </td>
   </tr>
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>Sebelah Timur</td>
-    <td>: <?php echo $panjang_batas_timur.' Meter berbatasan dengan tanah '.$nama_batas_timur; ?> </td>
+    <td>: <?php  echo $panjang_batas_timur.' Meter berbatasan dengan tanah '.$nama_batas_timur; ?> </td>
   </tr>
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td width="24%">Sebelah Barat</td>
-    <td width="67%">: <?php echo $panjang_batas_barat.'  berbatasan dengan tanah '.$nama_batas_barat; ?> </td>
+    <td width="67%">: <?php  echo $panjang_batas_barat.'  berbatasan dengan tanah '.$nama_batas_barat; ?> </td>
   </tr>
 </table>
 <br/>
