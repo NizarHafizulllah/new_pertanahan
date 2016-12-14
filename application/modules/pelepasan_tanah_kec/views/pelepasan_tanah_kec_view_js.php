@@ -24,6 +24,7 @@ $(document).ready(function(){
 		 	  dt.column(1).search($("#nama_pihak_pertama").val())
         .column(2).search($("#nama_pihak_kedua").val())
         .column(3).search($("#no_surat").val())
+        .column(4).search($("#id_desa").val())
 				 .draw();
 
 				 return false;

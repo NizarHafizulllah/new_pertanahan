@@ -326,12 +326,7 @@
                       <label class="col-md-2">Nama Batas Utara</label>
                       <div class="col-md-10"><input type="text" class="form-control" placeholder="Nama Batas Utara(Satuan Meter) ..." name="nama_batas_utara" value="<?php echo isset($nama_batas_utara)?$nama_batas_utara:''; ?>"></div>
                     </div>
-                    <div class="form-group">
-                      <label class="col-md-2">Desa/Kelurahan</label>
-                      <div class="col-md-10">
-                        <?php echo form_dropdown("desa",$arr_desa_tanah,isset($desa)?$desa:"",'id="desa" class="form-control"'); ?>
-                        </div>
-                    </div>
+                    
                     <div class="form-group">
                       <label class="col-md-2">Wilayah</label>
                       <div class="col-md-10">
@@ -393,12 +388,7 @@
 
                     <?php
                     if ($action=='simpan') { ?>
-                      <div class="form-group">
-                      <label class="col-md-2">No. Surat Pelepasan</label>
-                      <div class="col-md-10">
-                      <input type="text" name="no_surat" id="no_surat" class="form-control" placeholder="No. Surat Pelepasan ..."  >
-                      </div>
-                    </div>
+                      
                     </div><!-- /.box-body -->
                     </div><!-- /.box -->
               
@@ -406,12 +396,7 @@
                     <a style="border-radius: 9px;" href="<?php echo site_url('pelepasan_tanah'); ?>" class='btn btn-block btn-danger btn-lg'>Batal</a>;
 <?php 
                     }else{ ?>
-                      <div class="form-group">
-                      <label class="col-md-2">No. Surat Pelepasan</label>
-                      <div class="col-md-10">
-                      <input type="text" name="no_surat" id="no_surat" class="form-control" placeholder="No. Surat Pelepasan ..." value="<?php echo isset($no_surat)?$no_surat:''; ?>" disabled>
-                      </div><!-- /.box-body -->
-              </div><!-- /.box -->
+                      
               
               <button style="border-radius: 9px;" id="tombolsubmitupdate" class="btn btn-block btn-primary btn-lg">Simpan</button>
               <a style="border-radius: 9px;" href="<?php echo site_url('pelepasan_tanah'); ?>" class='btn btn-block btn-danger btn-lg'>Batal</a>
@@ -431,7 +416,12 @@
               <!-- <a style="border-radius: 9px;" href="<?php echo site_url('regis_desa'); ?>" class='btn btn-block btn-danger btn-lg'>Batal</a> -->
               
               
-
+              <!-- <div class="form-group">
+                      <label class="col-md-2">No. Surat Pelepasan</label>
+                      <div class="col-md-10">
+                      <input type="text" name="no_surat" id="no_surat" class="form-control" placeholder="No. Surat Pelepasan ..."  >
+                      </div>
+                    </div> -->
 
             </div><!--/.col (right) -->
 

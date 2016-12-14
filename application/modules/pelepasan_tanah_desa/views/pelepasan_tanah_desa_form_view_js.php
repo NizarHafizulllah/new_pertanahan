@@ -27,6 +27,25 @@ function pihak_pertama_add() {
     $("#PihakPertamaModal").html('TAMBAH DATA PIHAK PERTAMA');
                          //  $('#nama_saksi').val('');
                          // $('jabatan_saksi').val('');
+      $("#nik").val('');
+      $("#id_pihak_pertama").val('');
+      $("#nama").val('');
+      $("#tempat_lahir").val('');
+      $("#status_kawin").val('');
+      $("#jk").val('');
+      $("#tgl_lahir").val('');
+      $("#pekerjaan").val('');
+      $("#warga_negara").val('');
+      $("#status_kawin").val('');
+      $("#tgl_ktp").val('');
+      $("#tgl_berlaku_ktp").val('');
+      $("#alamat").val('');
+      $("#tersangka_id_provinsi").val('');
+      $("#status_kawin").val('');
+      $("#id_kecamatan").html('');
+      $("#id_desa").html('');
+      $("#tersangka_id_kota").html('');
+      
  
   $("#form_pihak_pertama").attr('action','<?php echo $pihak_pertama_add_url; ?>');
     
@@ -715,7 +734,7 @@ BootstrapDialog.show({
                                        
                                   });   
 
-                            $('#saksi').DataTable().ajax.reload();     
+                            $('#pihak_pertama').DataTable().ajax.reload();     
                         }
                         else {
                             BootstrapDialog.alert({
@@ -830,6 +849,79 @@ function surat_edit(id){
   });
 }
 
+function pihak_pertama_edit(id){
+
+
+    $('#pihak_pertama_modal').modal('show');
+    $("#form_pihak_pertama").attr('action','<?php echo site_url("$this->controller/tmp_pihak_pertama_update") ?>'); 
+
+
+    $.ajax({
+    url : '<?php echo site_url("$this->controller/get_pihak_pertama_detail/"); ?>/'+id,
+    dataType : 'json',
+    success : function(jsonData) {
+    $("#pihak_pertama_modal").modal('show');
+       $("#PihakPertamaModal").html('EDIT DATA PIHAK PERTAMA');
+       $(".tombol").prop('value','UPDATE DATA PIHAK PERTAMA');
+
+      $("#nik").val(jsonData.nik);
+      $("#id_pihak_pertama").val(jsonData.id);
+      $("#nama").val(jsonData.nama);
+      $("#tempat_lahir").val(jsonData.tempat_lahir);
+      $("#tgl_lahir").val(jsonData.tgl_lahir);
+      $("#pekerjaan").val(jsonData.pekerjaan);
+      $("#warga_negara").val(jsonData.warga_negara);
+      $("#status_kawin").val(jsonData.status_kawin);
+      $("#tgl_ktp").val(jsonData.tgl_ktp);
+      $("#tgl_berlaku_ktp").val(jsonData.tgl_berlaku_ktp);
+      $("#alamat").val(jsonData.alamat);
+      $("#id_desa").val(jsonData.id_desa);
+      $("#status_kawin").val(jsonData.status_kawin);
+      $("#nama_pasangan").val(jsonData.nama_pasangan);
+      $("#jk").val(jsonData.jk);
+      // $("#id_kecamatan").val(jsonData.id_kecamatan);
+      $("#tersangka_id_provinsi").val(jsonData.id_provinsi);
+      $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_kota") ?>',
+            data : { id_provinsi : jsonData.id_provinsi },
+            type : 'post', 
+            success : function(result) {
+                $("#tersangka_id_kota").html(result)
+                $("#tersangka_id_kota").val(jsonData.id_kota);
+            }
+      });
+
+      $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_kecamatan") ?>',
+            data : { id_kota : jsonData.id_kota },
+            type : 'post', 
+            success : function(result) {
+                $("#id_kecamatan").html(result)
+                $("#id_kecamatan").val(jsonData.id_kecamatan);
+            }
+      });
+
+      $.ajax({
+
+            url : '<?php echo site_url("$this->controller/get_desa") ?>',
+            data : { id_kecamatan : jsonData.id_kecamatan },
+            type : 'post', 
+            success : function(result) {
+                $("#id_desa").html(result)
+                $("#id_desa").val(jsonData.id_desa);
+            }
+      });
+      
+      
+
+      document.getElementById( "btn_simpan_pemilik" ).setAttribute( "onClick", "javascript: pihak_update();" );
+      
+    }
+  });
+}
+
 
 
 
@@ -898,6 +990,46 @@ function saksi_pelepasan_update(){
         });
         return false;
 }
+
+function pihak_update(){
+   $('#myPleaseWait').modal('show');
+        
+        $.ajax({
+            url : '<?php echo site_url("$this->controller/pihak_pertama_update"); ?>',
+            data : $("#form_pihak_pertama").serialize(),
+            dataType : 'json',
+            type : 'post',
+            success : function(obj) {
+                $('#myPleaseWait').modal('hide');
+                 console.log(obj);
+                if(obj.error==false){
+                         
+                         BootstrapDialog.alert({
+                            type: BootstrapDialog.TYPE_PRIMARY,
+                            title: 'Informasi',
+                            message: obj.message,
+                             
+                        });   
+                         
+                        $("#pihak_pertama_modal").modal('hide'); 
+                        $('#pihak_pertama').DataTable().ajax.reload();                       
+                        $('#form_pihak_pertama')[0].reset();
+                                
+                         
+                    }
+                    else {
+                         BootstrapDialog.alert({
+                            type: BootstrapDialog.TYPE_DANGER,
+                            title: 'Error',
+                            message: obj.message ,
+                             
+                        }); 
+                    }
+            }
+        });
+        return false;
+}
+
 
 function surat_update(){
    $('#myPleaseWait').modal('show');

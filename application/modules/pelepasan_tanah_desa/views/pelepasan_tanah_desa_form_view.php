@@ -441,7 +441,7 @@
                 <td width="30%" >NIK</td>
                 <TD>
                   <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK" />
-                  <input type="hidden" class="form-control" name="id" id="id" value="<?php  ?>" />
+                  <input type="hidden" class="form-control" name="id" id="id_pihak_pertama" value="<?php  ?>" />
                 </TD>
               </tr>
               <tr>
@@ -450,6 +450,13 @@
                   <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Pemilik" />
                 </TD>
               </tr>
+              <tr>
+                <td width="30%" >Jenis Kelamin</td>
+                <TD>
+                   <?php echo form_dropdown("jk",$arr_jk,'',' id="jk" class="form-control"') ?>
+                </TD>
+              </tr>
+
               <tr>
                 <td width="30%" >Tempat Lahir</td>
                 <TD>
@@ -469,6 +476,7 @@
                   <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" placeholder="Pekerjaan" />
                 </TD>
               </tr>
+             
 
               <tr>
                 <td width="30%" >Warga Negara</td>
@@ -481,10 +489,17 @@
               <tr>
                 <td width="30%" >Status Kawin</td>
                 <TD>
-                   <?php echo form_dropdown("status_kawin",$arr_kawin,'','class="form-control"') ?>
+                   <?php echo form_dropdown("status_kawin",$arr_kawin,'','id="status_kawin" class="form-control"') ?>
+                </TD>
+              </tr>
+               <tr>
+                <td width="30%" >Nama Pasangan</td>
+                <TD>
+                  <input type="text" class="form-control" name="nama_pasangan" id="nama_pasangan" placeholder="Diisi Jika Sudah Menikah" />
                 </TD>
               </tr>
 
+              
 
               <tr>
                 <td width="30%" >Tanggal KTP</td>
@@ -518,7 +533,7 @@
         $arr_provinsi = $this->cm->arr_dropdown("tiger_provinsi", 
       "id","provinsi",'provinsi');
 
-                  echo form_dropdown("",$arr_provinsi,'','id="tersangka_id_provinsi" class="form-control" onchange="get_kota(this,\'#tersangka_id_kota\',1)"'); 
+                  echo form_dropdown("id_provinsi",$arr_provinsi,'','id="tersangka_id_provinsi" class="form-control" onchange="get_kota(this,\'#tersangka_id_kota\',1)"'); 
 
 
 
@@ -530,7 +545,7 @@
           <?php 
                   
 
-                  echo form_dropdown("",array(),'','id="tersangka_id_kota" class="form-control" onchange="get_kecamatan(this,\'#id_kecamatan\',1)"'); 
+                  echo form_dropdown("id_kota",array(),'','id="tersangka_id_kota" class="form-control" onchange="get_kecamatan(this,\'#id_kecamatan\',1)"'); 
                 ?>
 
 

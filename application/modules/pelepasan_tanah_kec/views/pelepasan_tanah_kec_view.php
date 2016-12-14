@@ -13,9 +13,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">SURAT PENYERAHAN / PELEPASAN HAK ATAS TANAH</h3>
-              <div class="box-tools pull-right">
-              <a href="<?php echo site_url("$this->controller/baru"); ?>"><button type="button" class="btn btn-primary form-control"><i class="fa fa fa-plus-circle "></i> Tambah Surat</button></a>
-              </div>
+              
             </div>
             <div class="box-body">
 
@@ -39,12 +37,12 @@
                 <input id="nama_pihak_kedua" name="nama_pihak_kedua" type="text" class="form-control" placeholder="Nama"></input>
               </div>
             </div>
-            <!-- <div class="col-md-2">
+             <div class="col-md-2">
               <div class="form-group">
                 <label for="nama">Desa/Kelurahan</label>
                 <?php echo form_dropdown("id_desa",$arr_desa,isset($id_desa)?$id_desa:"",'id="id_desa" class="form-control"'); ?>
               </div>
-            </div> -->
+            </div> 
 
 
             <div class="col-md-1">
@@ -73,6 +71,7 @@
         <th width="20%">No. Surat</th>
         <th width="20%">Pihak Pertama </th>
         <th width="20%">Pihak Kedua </th>
+        <th width="15%">Desa/Kelurahan </th>
         <th width="15%">#</th>
     </tr>
   

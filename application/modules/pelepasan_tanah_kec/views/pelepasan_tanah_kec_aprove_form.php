@@ -1,51 +1,106 @@
-<html>
-  <head>
-    <title>
-      <?php echo   $title; ?>
-    </title>
 
- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/print_style.css"></head>
-
-<body>
-
-<!-- <div id="wrap" style="width:1024; margin:0px auto" >  -->
-
-
-<style>
-* {
-  font-size:10px;
-}
-.judul {
-  font-size:12px;
-  font-weight:bold;
-   text-align:center;
-}
-
-#gambar {
-  width:50px;
-  position:fixed;
-  top:10px;
-  float:left;
-}
-
-#kop {
-  text-align:center;
-}
-</style>
-
-<?php 
+	<?php 
 $userdata = $this->session->userdata('kecamatan_login'); 
 ?>
 
-<table width="100%" border="0" cellpadding="3">
-  <tr>
-    <td width="100%" align="right">-HALAMAN PERTAMA-</td>
-  </tr>
-  
-  <tr>
-    <td width="100%" align="center"><span class="judul">SURAT PENYERAHAN / PELEPASAN HAK ATAS TANAH </span></td>
-  </tr>
+<link href="<?php echo base_url("assets") ?>/css/datepicker.css" rel="stylesheet">
+<script src="<?php echo base_url("assets") ?>/js/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap/bootstrap-dialog.min.css">
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrapValidator.min.css">
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap/bootstrap-dialog.min.css">
+
+
+  <script src="<?php echo base_url(); ?>assets/js/bootstrap/bootstrap-dialog.min.js"></script>
+
+
+
+
+ <table width="100%">
+	<tr>
+		<td width="100%" align="center" style="font-size: 30px;">SURAT PENYERAHAN / PELEPASAN HAK ATAS TANAH</td>
+	</tr>
 </table>
+<br/>&nbsp;
+<br/>&nbsp;
+
+<div class="row">
+<div class="col-md-6">
+
+<div class="box">
+		<div class="box-header">
+		  <h3 class="box-title">Data Surat</h3>
+		</div><!-- /.box-header -->
+		<div class="box-body no-padding">
+		  <table class="table">
+		    <tr>
+		      <th style="width: 10px">#</th>
+		      <th style="width: 180px">Field</th>
+		      <th>Data</th>
+		    </tr>
+		    <tr>
+		      <td>1.</td>
+		      <td>Tanggal</td>
+		      <td><?php echo flipdate($tanggal); ?></td>
+		    </tr>
+		    <tr>
+		      <td>2.</td>
+		      <td>Tanggal Register</td>
+		      <td><?php echo flipdate($tgl_register_desa); ?></td>
+		    </tr>
+		    <tr>
+		      <td>3.</td>
+		      <td>Kepala Desa</td>
+		      <td><?php echo $nama_kades; ?></td>
+		    </tr>
+		  </table>
+		</div><!-- /.box-body -->
+	</div>
+	<div class="box">
+		<div class="box-header">
+		  <h3 class="box-title">Pihak Pertama</h3>
+		</div><!-- /.box-header -->
+		<div class="box-body no-padding">
+		  <table class="table">
+		    <tr>
+		      <th style="width: 10px">#</th>
+		      <th style="width: 180px">Field</th>
+		      <th>Data</th>
+		    </tr>
+		    <tr>
+		      <td>1.</td>
+		      <td>Nama</td>
+		      <td><?php echo $umur_pihak_pertama ?></td>
+		    </tr>
+		    <tr>
+		      <td>2.</td>
+		      <td>Umur</td>
+		      <td><?php echo $umur_pihak_pertama ?></td>
+		    </tr>
+		    <tr>
+		      <td>3.</td>
+		      <td>Kewarganegaraan</td>
+		      <td><?php echo $wn_pihak_pertama ?></td>
+		    </tr>
+		    <tr>
+		      <td>4.</td>
+		      <td>Status Perkawinan</td>
+		      <td><?php if($status_kawin_pihak_pertama=="k"){ echo "Kawin"; }else{ echo "Belum Kawin"; } ?></td>
+		    </tr>
+		    <tr>
+		      <td>5.</td>
+		      <td>Pekerjaan</td>
+		      <td><?php echo $pekerjaan_pihak_pertama ?></td>
+		    </tr>
+		    <tr>
+		      <td>6.</td>
+		      <td>Tempat tinggal</td>
+		      <td><?php echo $alamat_pihak_pertama ?>, Kelurahan <?php echo $desa_pihak_pertama ?>, Kecamatan <?php echo $kecamatan_pihak_pertama ?>, Kabupaten <?php echo $kabupaten_pihak_pertama ?></td>
+		    </tr>
+		  </table>
+		</div><!-- /.box-body -->
+	</div>
+	</div>
+	</div>
 
 
 <table width="100%" border="0" cellpadding="3">
@@ -55,34 +110,17 @@ $userdata = $this->session->userdata('kecamatan_login');
 </table>
 <br/>
 <table width="100%" border="0" cellpadding="2">
- <?php 
- $no = 0;
- $no_romawi = range('a', 'z');
- foreach ($dt_pihak_pertama as $row) {
-   if ($jumlah_pihak_pertama==1) { ?>
-   <tr>
-     <td width="5%"><strong>I.</strong></td>
-    
-    <td width="95%" colspan="2" align="justify"><strong><?php echo $row['nama'] ?></strong>, umur <?php echo $row['umur']; ?> tahun, Kewarganegaraan <?php echo $row['warga_negara']; ?>, Status Perkawinan <?php if($row['status_kawin']=="k"){ echo "Kawin"; }else if($row['status_kawin']=="tk"){ echo "Tidak Kawin"; }else if ($row['status_kawin']=="ch"){ echo "Cerai Hidup"; }else {echo "Cerai Mati"; } ?>, Pekerjaan <?php echo $row['pekerjaan']; ?>, bertempat tinggal di <?php echo $row['alamat'] ?>, Kelurahan/Desa <?php echo $row['nama_desa'] ?>, Kecamatan <?php echo $row['nama_kecamatan'] ?>, Kabupaten/Kota <?php echo $row['nama_kota'] ?>;-------------------------------------------</td>
-    </tr>
-  <?php } else{
-  ?>
   <tr>
-    <td width="3%"><strong> <?php if($no==0){echo 'I';}else{ echo '&nbsp;'; }  ?></strong></td>
-    <td width="3%"><?php echo $no_romawi[$no]; ?>.</td>
-    <td width="94%" align="justify"><strong><?php echo $row['nama'] ?></strong>, umur <?php echo $row['umur']; ?> tahun, Kewarganegaraan <?php echo $row['warga_negara']; ?>, Status Perkawinan <?php if($row['status_kawin']=="k"){ echo "Kawin"; }else if($row['status_kawin']=="tk"){ echo "Tidak Kawin"; }else if ($row['status_kawin']=="ch"){ echo "Cerai Hidup"; }else {echo "Cerai Mati"; } ?>, Pekerjaan <?php echo $row['pekerjaan']; ?>, bertempat tinggal di <?php echo $row['alamat'] ?>, Kelurahan/Desa <?php echo $row['nama_desa'] ?>, Kecamatan <?php echo $row['nama_kecamatan'] ?>, Kabupaten/Kota <?php echo $row['nama_kota'] ?>;-------------------------------------------</td>
-  </tr>
-  <?php
-    $no = $no+1;
-    }
-   } ?>
-  <tr>
-  <td width="5%">&nbsp;</td>
-    <td width="95%" align="center"  colspan="2">------------------------------------------ <strong>selanjutnya disebut Pihak Pertama</strong> ------------------------------------------</td>
+    <td width="5%"><strong>I. </strong></td>
+    <td width="95%" align="justify"><strong><?php echo $nama_pihak_pertama ?></strong>, umur <?php echo $umur_pihak_pertama ?> tahun, Kewarganegaraan <?php echo $wn_pihak_pertama ?>, Status Perkawinan <?php if($status_kawin_pihak_pertama=="k"){ echo "Kawin"; }else{ echo "Belum Kawin"; } ?>, Pekerjaan <?php echo $pekerjaan_pihak_pertama ?>, bertempat tinggal di <?php echo $alamat_pihak_pertama ?>, Kelurahan <?php echo $desa_pihak_pertama ?>, Kecamatan <?php echo $kecamatan_pihak_pertama ?>, Kabupaten <?php echo $kabupaten_pihak_pertama ?>;-------------------------------------------</td>
   </tr>
   <tr>
   <td width="5%">&nbsp;</td>
-    <td width="95%" align="center" colspan="2">-------------------------------------------------- <strong>yang menyerahkan hak</strong> --------------------------------------------------</td>
+    <td width="95%" align="center" >------------------------------------------ <strong>selanjutnya disebut Pihak Pertama</strong> ------------------------------------------</td>
+  </tr>
+  <tr>
+  <td width="5%">&nbsp;</td>
+    <td width="95%" align="center">-------------------------------------------------- <strong>yang menyerahkan hak</strong> --------------------------------------------------</td>
   </tr>
   <tr>
   <td width="5%">&nbsp;</td>
@@ -116,7 +154,7 @@ $userdata = $this->session->userdata('kecamatan_login');
   </tr>
   <tr>
     <td width="3%">1. </td>
-    <td width="97%" align="justify">Bahwa <strong>Pihak Pertama</strong> berdasarkan;----------------------------------------------------------------------</td>
+    <td width="97%" align="justify">Bahwa <strong>Pihak Pertama</strong> berdasarkan</td>
   </tr>
   <tr>
     <td width="3%">&nbsp;</td>
@@ -129,7 +167,7 @@ $userdata = $this->session->userdata('kecamatan_login');
         ?>
         <tr>
          <td width="3%"><?php echo $alphabet[$no]; ?>. </td>
-        <td width="97%" align="justify"><?php echo $row['surat']; ?>;--------</td>
+        <td width="97%" align="justify"><?php echo $row['surat']; ?></td>
     
   </tr>
   <?php } ?>
@@ -139,12 +177,12 @@ $userdata = $this->session->userdata('kecamatan_login');
 
     <tr>
          <td width="3%">&nbsp; </td>
-        <td width="97%" align="justify">dengan ini mengaku dengan sebenarnya telah menyerahkan / melepaskan Hak Atas Tanah kepada <strong>Pihak Kedua</strong> dan <strong>Pihak Kedua</strong> telah menerima dari <strong>Pihak Pertama</strong>;-------------------------</td>
+        <td width="97%" align="justify">dengan ini mengaku dengan sebenarnya telah menyerahkan / melepaskan Hak Atas Tanah kepada <strong>Pihak Kedua</strong> dan <strong>Pihak Kedua</strong> telah menerima dari <strong>Pihak Pertama</strong></td>
     
   </tr>
   <tr>
          <td width="3%">&nbsp; </td>
-        <td width="97%" align="justify">Sebidang tanah berikut segala tanam tumbuh yang ada diatas tanah tersebut yang terletak di <?php echo $wilayah ?>;----------------------------------------</td>
+        <td width="97%" align="justify">Sebidang tanah berikut segala tanam tumbuh yang ada diatas tanah tersebut yang terletak di <?php echo $wilayah ?></td>
     
   </tr>
       
@@ -155,25 +193,25 @@ $userdata = $this->session->userdata('kecamatan_login');
          <td width="4%">&nbsp;</td>
            <td width="30%">Provinsi</td>
            <td width="2%">:</td>
-           <td width="65%"><?php echo $propinsi ?>;------------------------------------</td>
+           <td width="65%"><?php echo $propinsi ?></td>
          </tr>
          <tr>
          <td width="4%">&nbsp;</td>
            <td width="30%">Kabupaten</td>
            <td width="2%">:</td>
-           <td width="65%"><?php echo $kabupaten ?>;------------------------------------</td>
+           <td width="65%"><?php echo $kabupaten ?></td>
          </tr>
          <tr>
          <td width="4%">&nbsp;</td>
            <td width="30%">Kecamatan</td>
            <td width="2%">:</td>
-           <td width="65%"><?php echo $kecamatan ?>;------------------------------------</td>
+           <td width="65%"><?php echo $kecamatan ?></td>
          </tr>
          <tr>
          <td width="4%">&nbsp;</td>
            <td width="30%">Kelurahan/Desa</td>
            <td width="2%">:</td>
-           <td width="64%"><?php echo $desa ?>;------------------------------------</td>
+           <td width="64%"><?php echo $desa ?></td>
          </tr>
        </table>
        <br/>
@@ -181,7 +219,7 @@ $userdata = $this->session->userdata('kecamatan_login');
        <table width="100%" border="0">
          <tr>
          <td width="4%">&nbsp;</td>
-           <td width="92%">dengan ukuran dan batas-batas sebagai berikut;-------------------------------------------------------------</td>
+           <td width="92%">dengan ukuran dan batas-batas sebagai berikut</td>
          </tr>
          
        </table>
@@ -190,39 +228,39 @@ $userdata = $this->session->userdata('kecamatan_login');
          <td width="4%">&nbsp;</td>
            <td width="30%">Utara</td>
            <td width="2%">:</td>
-           <td width="65%"><?php echo $panjang_batas_utara.' berbatas dengan '.$nama_batas_utara ?>;----------------</td>
+           <td width="65%"><?php echo $panjang_batas_utara.' berbatas dengan '.$nama_batas_utara ?></td>
          </tr>
          <tr>
          <td width="4%">&nbsp;</td>
            <td width="30%">Timur</td>
            <td width="2%">:</td>
-           <td width="65%"><?php echo $panjang_batas_timur.' berbatas dengan '.$nama_batas_timur ?>;----------------</td>
+           <td width="65%"><?php echo $panjang_batas_timur.' berbatas dengan '.$nama_batas_timur ?></td>
          </tr>
          <tr>
          <td width="4%">&nbsp;</td>
            <td width="30%">Selatan</td>
            <td width="2%">:</td>
-           <td width="65%"><?php echo $panjang_batas_selatan.' berbatas dengan '.$nama_batas_selatan ?>;----------------</td>
+           <td width="65%"><?php echo $panjang_batas_selatan.' berbatas dengan '.$nama_batas_selatan ?></td>
          </tr>
          <tr>
          <td width="4%">&nbsp;</td>
            <td width="30%">Barat</td>
            <td width="2%">:</td>
-           <td width="65%"><?php echo $panjang_batas_barat.' berbatas dengan '.$nama_batas_barat ?>;-------</td>
+           <td width="65%"><?php echo $panjang_batas_barat.' berbatas dengan '.$nama_batas_barat ?></td>
          </tr>
        </table>
     </td>
   </tr>
   <tr>
     <td width="3%">2. </td>
-    <td width="97%" align="justify">Bahwa penyerahan / pelepasan hak atas tanah ini meliputi segala tanam tumbuh yang ada diatas tanah tersebut;----------------------------------------------------------------------------------------------------------------</td>
+    <td width="97%" align="justify">Bahwa penyerahan / pelepasan hak atas tanah ini meliputi segala tanam tumbuh yang ada diatas tanah tersebut</td>
   </tr>
   <tr>
     <td width="3%">3. </td>
     <?php if ($biaya_ganti_rugi!=0.00) {
       $spasi = ''
       ?>
-       <td width="97%" align="justify">Bahwa penyerahan / pelepasan hak atas tanah ini terjadi dengan pembayaran ganti rugi berupa uang sebesar Rp. <?php echo $biaya_ganti_rugi ?>;- dari <strong>Pihak Kedua</strong> kepada <strong>Pihak Pertama</strong> yang mana telah diterima dengan cukup dan tunai oleh <strong>Pihak Pertama</strong>, dan Surat Penyerahan/pelepasan Hak Atas Tanah ini berlaku pula sebagai bukti penerimaannya (Kwitansi);-----------------------------------------------------</td>
+       <td width="97%" align="justify">Bahwa penyerahan / pelepasan hak atas tanah ini terjadi dengan pembayaran ganti rugi berupa uang sebesar Rp. <?php echo $biaya_ganti_rugi ?>;- dari <strong>Pihak Kedua</strong> kepada <strong>Pihak Pertama</strong> yang mana telah diterima dengan cukup dan tunai oleh <strong>Pihak Pertama</strong>, dan Surat Penyerahan/pelepasan Hak Atas Tanah ini berlaku pula sebagai bukti penerimaannya (Kwitansi)</td>
     <?php }else{ 
           $spasi = '<br/>&nbsp;<br/>&nbsp;'
       ?>
@@ -233,30 +271,18 @@ $userdata = $this->session->userdata('kecamatan_login');
   </tr>
   <tr>
     <td width="3%">4. </td>
-    <td width="97%" align="justify">Bahwa untung rugi yang mungkin terjadi atas penyerahan / pelepasan hak atas tanah ini, mulai saat ini menjadi tanggungan <strong>Pihak Kedua</strong>;-----------------------------------------------------------------------------</td>
+    <td width="97%" align="justify">Bahwa untung rugi yang mungkin terjadi atas penyerahan / pelepasan hak atas tanah ini, mulai saat ini menjadi tanggungan <strong>Pihak Kedua</strong></td>
   </tr>
   <tr>
     <td width="3%">5. </td>
-    <td width="97%" align="justify">Bahwa Ahliwaris <strong>Pihak Pertama</strong> tidak mempunyai hak apapun lagi terhadap tanah berikut segala tanam tumbuh  yang ada di atas tanah tersebut, selanjutnya <strong>Pihak Pertama</strong> menjamin bahwa tanah berikut segala tanam tumbuh  yang ada diatas tanah tersebut tidak dikenakan sesuatu sitaan atau tersangkut sebagai tanggungan sesuatu atau diberati dengan beban-beban lainnya;-----------------</td>
+    <td width="97%" align="justify">Bahwa Ahliwaris <strong>Pihak Pertama</strong> tidak mempunyai hak apapun lagi terhadap tanah berikut segala tanam tumbuh  yang ada di atas tanah tersebut, selanjutnya <strong>Pihak Pertama</strong> menjamin bahwa tanah berikut segala tanam tumbuh  yang ada diatas tanah tersebut tidak dikenakan sesuatu sitaan atau tersangkut sebagai tanggungan sesuatu atau diberati dengan beban-beban lainnya</td>
   </tr>
   <tr>
     <td width="3%">&nbsp;</td>
-    <td width="97%" align="justify">------- Demikian surat penyerahan / pelepasan hak atas tanah ini dibuat dihadapan saksi-saksi :-------</td>
+    <td width="97%" align="justify">Demikian surat penyerahan / pelepasan hak atas tanah ini dibuat dihadapan saksi-saksi :</td>
   </tr>
 </table>
-<table width="100%" border="0" cellpadding="3">
-  <tr>
-    <td width="100%" align="right">-KEHALAMAN KEDUA-</td>
-  </tr>
-</table>
-<?php echo $spasi; ?>
-<br/>&nbsp;
-<br/>&nbsp;
-<table width="100%" border="0" cellpadding="3">
-  <tr>
-    <td width="100%" align="right">-HALAMAN KEDUA-</td>
-  </tr>
-</table>
+
 <table width="100%" border="0">
 <?php 
   $no_saksi = 0;
@@ -265,7 +291,7 @@ foreach ($dt_saksi as $row) {
   ?>
   <tr>
     <td width="3%"><?php echo $no_saksi; ?></td>
-    <td width="92%"><?php echo '<strong>'.$row['nama'].'</strong>, '.$row['jabatan']; ?>;---</td>
+    <td width="92%"><?php echo '<strong>'.$row['nama'].'</strong>, '.$row['jabatan']; ?></td>
   </tr>
   <?php
 } ?>
@@ -293,7 +319,7 @@ foreach ($dt_saksi as $row) {
 <table width="100%" border="0" >
   <tr>
     <td width="3%">&nbsp;</td>
-    <td width="95%" align="justify">Yang <?php //echo $jumlah_saksi ?> turut bertanda tangan dibawah ini dan diketahui oleh Camat Muntok Kabupaten Bangka Barat.---------------------------------</td>
+    <td width="95%" align="justify">Yang <?php echo $jumlah_saksi ?> turut bertanda tangan dibawah ini dan diketahui oleh Camat Muntok Kabupaten Bangka Barat.</td>
   </tr>
 </table>
 
@@ -301,9 +327,6 @@ foreach ($dt_saksi as $row) {
 <br/>&nbsp;
 
 <table width="100%" border="0">
-<?php if ($jumlah_pihak_pertama==1) {
-    
-   ?>
   <tr>
     <td align="center" width="30%"><strong>PIHAK KEDUA</strong></td>
     <td align="center" width="40%">&nbsp;</td>
@@ -314,9 +337,6 @@ foreach ($dt_saksi as $row) {
     <td align="center" width="40%">&nbsp;</td>
     <td align="center" width="30%"><strong>YANG MENYERAHKAN HAK</strong></td>
   </tr>
-  
-  
-
   <tr>
     <td align="center" width="30%"><strong>&nbsp;</strong></td>
     <td align="center" width="40%">&nbsp;</td>
@@ -345,62 +365,14 @@ foreach ($dt_saksi as $row) {
   <tr>
     <td align="center" width="30%"><strong><?php echo $nama_pihak_kedua ?></strong></td>
     <td align="center" width="40%">&nbsp;</td>
-    <?php
-    foreach ($dt_pihak_pertama as $row) {
-      $status_kawin_pihak_pertama = $row['status_kawin'];
-      $jenis_kelamin_pihak_pertama = $row['status_kawin'];
-      $nama_pasangan_pihak_pertama = $row['nama_pasangan'];
-    
-     ?>
-    <td align="center" width="30%"><strong><?php echo $row['nama'] ?></strong></td>
-    <?php } ?>
+    <td align="center" width="30%"><strong><?php echo $nama_pihak_pertama ?></strong></td>
   </tr>
-  <?php }else { ?>
-   <tr>
-    <td align="center" width="30%"><strong>PIHAK KEDUA</strong></td>
-    <td align="center" width="20%">&nbsp;</td>
-    <td align="center" width="50%" colspan="2"><strong>PIHAK PERTAMA</strong></td>
-  </tr>
-  <tr>
-    <td align="center" width="30%"><strong>YANG MENERIMA HAK</strong></td>
-    <td align="center" width="20%">&nbsp;</td>
-    <td align="center" width="50%" colspan="2"><strong>YANG MENYERAHKAN HAK</strong></td>
-  </tr>
-
-  <tr>
-    <td align="center" width="30%"><strong>&nbsp;</strong></td>
-    <td align="center" width="20%">&nbsp;</td>
-    <td align="center" width="50%" colspan="2"><strong>&nbsp;</strong></td>
-  </tr>
-  <?php $no_tanda_tangan = 0;
-    foreach ($dt_pihak_pertama as $row) {
-      $status_kawin_pihak_pertama = $row['status_kawin'];
-      $jenis_kelamin_pihak_pertama = $row['status_kawin'];
-      $nama_pasangan_pihak_pertama = $row['nama_pasangan'];
-      $no_tanda_tangan = $no_tanda_tangan+1;
-     ?>
-  <tr>
-    <td align="center" width="30%">&nbsp;</td>
-    <td align="center" width="20%">&nbsp;</td>
-    <td align="left" width="30%"><strong><?php echo $no_tanda_tangan.'. '.$row['nama'] ?></strong> </td>
-    <td align="center" width="20%"><strong>..................... </strong></td>
-  </tr>
-  <?php } ?>
-  <tr>
-    <td align="center" width="30%"><strong><?php echo $nama_pihak_kedua ?></strong></td>
-    <td align="center" width="20%">&nbsp;</td>
-    <td align="center" width="50%" colspan="2"><strong>&nbsp;</strong></td>
-  </tr>
-
-
-    <?php } ?>
-
   <tr>
     <td align="center" width="30%">&nbsp;</td>
     <td align="center" width="40%">&nbsp;</td>
     <td align="center" width="30%">&nbsp;</td>
   </tr>
-  <?php if ($status_kawin_pihak_pertama=='k'&&$jumlah_pihak_pertama==1) {
+  <?php if ($status_kawin_pihak_pertama=='k') {
     if ($jenis_kelamin_pihak_pertama=='p') {
       $jenis_pasangan = 'suami';
     }else{
@@ -485,7 +457,7 @@ foreach ($dt_saksi as $row) {
 <table width="100%" border="0">
   <tr>
     
-    <td width="100%" align="center"><strong>-------------------------------------------------------</strong></td>
+    <td width="100%" align="center"><strong></strong></td>
   </tr>
   <tr>
    
@@ -493,7 +465,7 @@ foreach ($dt_saksi as $row) {
   </tr>
   <tr>
    
-    <td width="100%" align="center"><strong>-------------------------------------------------------</strong></td>
+    <td width="100%" align="center"><strong></strong></td>
   </tr>
   
 </table>
@@ -543,16 +515,17 @@ foreach ($dt_saksi as $row) {
 </table>
 
 
-   
-
-<!-- 
-      RIDUAN ZAHRI, S.Sos
-      Pembina 
-               NIP.19621104 198303 1 004 -->
 
 
 
-<!-- </div> end of wrap -->
-</body>
 
-</html>
+
+
+
+
+
+	
+<?php 
+$this->load->view($this->controller.'_aprove_form_js');
+?>
+			
