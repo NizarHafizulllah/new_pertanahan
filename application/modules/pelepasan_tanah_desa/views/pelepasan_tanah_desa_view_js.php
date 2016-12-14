@@ -50,6 +50,20 @@ function printsurat(id){
   
 }
 
+function printber(id){
+  
+   
+  window.open('<?php echo site_url("pelepasan_tanah_desa/pdfber?id=") ?>'+id);
+  
+}
+
+function printrek(id){
+  
+   
+  window.open('<?php echo site_url("pelepasan_tanah_desa/pdfrek?id=") ?>'+id);
+  
+}
+
 
 
 

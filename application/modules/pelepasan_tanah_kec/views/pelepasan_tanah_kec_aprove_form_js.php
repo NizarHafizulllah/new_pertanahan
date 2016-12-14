@@ -1,65 +1,11 @@
-
 <script type="text/javascript">
-
-$(document).ready(function(){
-
-	 var dt = $("#pelepasan").DataTable(
-		 	{
-		 	
-		 		// "iDisplayLength": 50,
-				"columnDefs": [ { "targets": 0, "orderable": false } ],
-				"processing": true,
-		        "serverSide": true,
-		        "ajax": '<?php echo site_url("$this->controller/get_data") ?>'
-		 	});
-
-		 
-		 $("#regis_desa_filter").css("display","none");  
-	
-	 
-		 $("#btn_submit").click(function(){
-		 	  // alert('hello');
-		 	  
-
-		 	  dt.column(1).search($("#nama_pihak_pertama").val())
-        .column(2).search($("#nama_pihak_kedua").val())
-        .column(3).search($("#no_surat").val())
-				 .draw();
-
-				 return false;
-		 });
-
-
-		 $("#btn_reset").click(function(){
-			$("#nama_pihak_pertama").val('');
-      $("#nama_pihak_kedua").val('');
-      $("#no_surat").val('');
-      $("#id_desa").val('');
-
-			$("#btn_submit").click();
-		 });
-
-
-});
-	
-function printsurat(id){
-  
-   
-  window.open('<?php echo site_url("pelepasan_tanah/pdf?id=") ?>'+id);
-  
-}
-
-
-
-
-
-function hapus(id){
+	function setujui(id){
 
 
 
 BootstrapDialog.show({
-            message : 'ANDA AKAN MENGHAPUS SURAT PENYERAHAN. ANDA YAKIN  ?  ',
-            title: 'KONFIRMASI HAPUS DATA  BIRO JASA',
+            message : 'ANDA AKAN MENYETUJUI SURAT PENYERAHAN. ANDA YAKIN  ?  ',
+            title: 'KONFIRMASI SETUJUI SURAT PENYERAHAN',
             draggable: true,
             buttons : [
               {
@@ -72,7 +18,7 @@ BootstrapDialog.show({
                   dialogItself.close();
                   $('#myPleaseWait').modal('show'); 
                   $.ajax({
-                  	url : '<?php echo site_url("$this->controller/hapusdata") ?>',
+                  	url : '<?php echo site_url("$this->controller/aprovesurat") ?>',
                   	type : 'post',
                   	data : {id : id},
                   	dataType : 'json',
@@ -86,7 +32,7 @@ BootstrapDialog.show({
 				                       
 				                  });   
 
-                  			$('#pelepasan').DataTable().ajax.reload();		
+                  			 location.href='<?php echo site_url("$this->controller"); ?>';
                   		}
                   		else {
                   			BootstrapDialog.alert({
@@ -112,11 +58,5 @@ BootstrapDialog.show({
           });
 
 }
-
-
- 		 
-
-
-
 
 </script>

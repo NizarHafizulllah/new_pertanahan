@@ -1,11 +1,11 @@
 <?php 
-class pelepasan_tanah extends desa_controller{
+class pelepasan_tanah_kec extends kecamatan_controller{
 	var $controller;
-	function pelepasan_tanah(){
+	function pelepasan_tanah_kec(){
 		parent::__construct();
 
 		$this->controller = get_class($this);
-		$this->load->model('pelepasan_tanah_model','dm');
+		$this->load->model('pelepasan_tanah_kec_model','dm');
         $this->load->model("coremodel","cm");
          $this->load->helper("tanggal");
 		
@@ -16,7 +16,7 @@ class pelepasan_tanah extends desa_controller{
 
 
 function index(){
-        $userdata = $this->session->userdata('desa_login');
+        $userdata = $this->session->userdata('kec_login');
         $kecamatan = $userdata['kecamatan'];
 		$data_array=array();
 
@@ -36,63 +36,14 @@ function index(){
 
 
 
-function baru(){
-        $data_array=array();
 
-        // $userdata = $this->session->userdata('admin_login');
-        // $username1 = $userdata['username'];
-
-        $userdata = $this->session->userdata('desa_login');
-        $desa = $userdata['desa'];
-        // show_array($userdata);
-        $temp_id_surat = $this->session->userdata("temp_id_surat"); 
-
-
-        if($temp_id_surat == "") {
-            $xx = md5(date("dmyhis").round(0,100)); 
-            $this->session->set_userdata("temp_id_surat",$xx);
-            $temp_id_surat = $this->session->userdata("temp_id_surat"); 
-        }
-
-        // echo $this->session->userdata("temp_lap_a_id");  exit;
-        $data_array['json_url_surat'] = site_url("$this->controller/temp_get_surat");
-        $data_array['json_url_saksi'] = site_url("$this->controller/temp_get_saksi");
-        //$this->session->unset_userdata("temp_lap_a_id");
-        $data_array['temp_id_surat']=$temp_id_surat;
-        $data_array['surat_add_url'] = site_url("$this->controller/tmp_surat_simpan");
-        $data_array['saksi_pelepasan_add_url'] = site_url("$this->controller/tmp_saksi_simpan");
-        $data_array['surat_pelepasan_add_url'] = site_url("$this->controller/tmp_surat_pelepasam_simpan");
-        $data_array['arr_jk'] = array('l' => 'Laki-laki', 'p' => 'Perempuan');
-        $data_array['arr_kawin'] = array('k' => 'Kawin', 'tk' => 'Tidak Kawin');
-
-        // show_array($temp_tanah_id);
-
-        $data_array['arr_provinsi'] = $this->cm->arr_dropdown("tiger_provinsi", "id", "provinsi", "provinsi");
-        $data_array['arr_kota'] = array("" => "- Pilih Provinsi Terlebih Dahulu -");
-        $data_array['arr_kecamatan'] = array("" => "- Pilih Kota/Kabupaten Terlebih Dahulu -");
-        $data_array['arr_desa'] = array("" => "- Pilih Kecamatan Terlebih Dahulu -");
-
-        // exit();
-        $data_array['action'] = 'simpan';
-        $content = $this->load->view($this->controller."_form_view",$data_array,true);
-        
-
-        // $data_array['arr_kecamatan'] = $this->cm->arr_dropdown3("tiger_kecamatan", "id", "kecamatan", "kecamatan", "id_kota", "19_5");
-       
-        $content = $this->load->view($this->controller."_form_view",$data_array,true);
-
-        $this->set_subtitle("Desa");
-        $this->set_title("SURAT PENYERAHAN / PELEPASAN HAK ATAS TANAH");
-        $this->set_content($content);
-        $this->cetak();
-}
 
 
 
 
 
 function get_no_surat(){
-    $userdata = $this->session->userdata("desa_login");
+    $userdata = $this->session->userdata("kec_login");
     // show_array($userdata);
     $desa = $userdata['desa'];
 
@@ -152,34 +103,12 @@ else {
 }
 
 
-function hapusdata(){
-        $get = $this->input->post();
-        $id = $get['id'];
-
-        $data = array('id' => $id, );
-
-        $res = $this->db->delete('pelepasan', $data);
-        if($res){
-            $arr = array("error"=>false,"message"=>"DATA BERHASIL DIHAPUS");
-            $this->db->where('id_pelepasan', $id);
-            $this->db->delete('saksi_pelepasan');
-            $this->db->where('id_surat', $id);
-            $this->db->delete('surat_pelepasan');
-        }
-        else {
-            $arr = array("error"=>true,"message"=>"DATA GAGAL DIHAPUS ".mysql_error());
-        }
-        //redirect('sa_birojasa_user');
-        echo json_encode($arr);
-    }
 
 
 
 
-function hapus_session(){
-        
-        $this->session->unset_userdata("temp_tanah_id");
-    }
+
+
 
     function get_data() {
 
@@ -196,11 +125,11 @@ function hapus_session(){
         $nama_pihak_pertama = $_REQUEST['columns'][1]['search']['value'];
         $nama_pihak_kedua = $_REQUEST['columns'][2]['search']['value'];
         $no_surat = $_REQUEST['columns'][3]['search']['value'];
-        // $desa = $_REQUEST['columns'][4]['search']['value'];
+        $desa = $_REQUEST['columns'][4]['search']['value'];
         
 
-        $userdata = $this->session->userdata('desa_login');
-        $desa = $userdata['desa'];
+        $userdata = $this->session->userdata('kec_login');
+        $kecamatan = $userdata['kecamatan'];
 
         // $this->db->where('desa_tanah', $desa);
         
@@ -218,6 +147,7 @@ function hapus_session(){
                 "nama_pihak_kedua" => $nama_pihak_kedua,
                 "no_surat" => $no_surat,
                 "desa" => $desa,
+                "kecamatan" => $kecamatan,
 				
 				 
 		);     
@@ -250,8 +180,7 @@ function hapus_session(){
                                 <span class='sr-only'>Toggle Dropdown</span>
                               </button>
                               <ul class='dropdown-menu' role='menu'>
-                                <li><a href='#' onclick=\"hapus('$id')\" ><i class='fa fa-trash'></i> Hapus</a></li>
-                                <li><a href='pelepasan_tanah/editdata?id=$id'><i class='fa fa-edit'></i> Edit</a></li>
+                                <li><a href='pelepasan_tanah_kec/aprove?id=$id'><i class='fa fa-edit'></i> Setujui</a></li>
 
                               </ul>
                             </div>";
@@ -264,6 +193,7 @@ function hapus_session(){
                               </button>
                               <ul class='dropdown-menu' role='menu'>
                                 <li><a href='#'  onclick=\"printsurat('$id')\"><i class='fa fa-print'></i> Print Surat</a></li>
+                                <li><a href='pelepasan_tanah_kec/aprove?id=$id'><i class='fa fa-eye'></i> Detail</a></li>
                               </ul>
                             </div>";
         }
@@ -278,7 +208,8 @@ function hapus_session(){
                 $row['tanggal'],
                 $row['no_surat'],
         		$row['nama_pihak_pertama'], 
-                $row['nama_pihak_kedua'],     		 
+                $row['nama_pihak_kedua'],
+                $row['nm_desa'],     		 
         		$action,
         		
          			 
@@ -325,7 +256,7 @@ function get_saksi_detail($id){
         
         
 
-        $userdata = $this->session->userdata('desa_login');
+        $userdata = $this->session->userdata('kec_login');
         $kecamatan = $userdata['kecamatan'];
 
 
@@ -425,7 +356,7 @@ function get_saksi_detail($id){
         
         
 
-        $userdata = $this->session->userdata('desa_login');
+        $userdata = $this->session->userdata('kec_login');
         $kecamatan = $userdata['kecamatan'];
 
 
@@ -525,7 +456,7 @@ function get_saksi_detail($id){
         
         
 
-        $userdata = $this->session->userdata('desa_login');
+        $userdata = $this->session->userdata('kec_login');
         $kecamatan = $userdata['kecamatan'];
 
 
@@ -623,7 +554,7 @@ function get_saksi_detail($id){
         
         
 
-        $userdata = $this->session->userdata('desa_login');
+        $userdata = $this->session->userdata('kec_login');
         $kecamatan = $userdata['kecamatan'];
 
 
@@ -721,7 +652,7 @@ function get_saksi_detail($id){
         
         
 
-        $userdata = $this->session->userdata('desa_login');
+        $userdata = $this->session->userdata('kec_login');
         $desa = $userdata['desa'];
 
 
@@ -810,47 +741,68 @@ function get_saksi_detail($id){
     }
     
 
-    function editdata(){
-    	 $get = $this->input->get(); 
-    	 $id = $get['id'];
 
-    	 $this->db->where('id',$id);
-    	 $pelepasan = $this->db->get('pelepasan');
-    	 $data = $pelepasan->row_array();
-         $this->session->set_userdata("id_surat",$id);
-         $data['json_url_surat'] = site_url("$this->controller/get_surat");
-        $data['json_url_saksi'] = site_url("$this->controller/get_saksi");
-        //$this->session->unset_userdata("temp_lap_a_id");
-        // $data['id']=$id;
-        $data['surat_add_url'] = site_url("$this->controller/surat_simpan");
-        $data['saksi_pelepasan_add_url'] = site_url("$this->controller/saksi_simpan");
-        $data['surat_pelepasan_add_url'] = site_url("$this->controller/surat_pelepasam_simpan");
-        $data['arr_jk'] = array('l' => 'Laki-laki', 'p' => 'Perempuan');
-        $data['arr_kawin'] = array('k' => 'Kawin', 'tk' => 'Tidak Kawin');
 
-        // show_array($temp_tanah_id);
+    function aprove(){
+    	
+    $get = $this->input->get(); 
+    $id = $get['id'];
 
-        $data['arr_provinsi_pertama'] = $this->cm->arr_dropdown("tiger_provinsi", "id", "provinsi", "provinsi");
-        $data['arr_kota_pertama'] = $this->cm->arr_dropdown3("tiger_kota", "id", "kota", "kota", "id_provinsi", $data['provinsi_pihak_pertama']);
-        $data['arr_kecamatan_pertama'] = $this->cm->arr_dropdown3("tiger_kecamatan", "id", "kecamatan", "kecamatan", "id_kota", $data['kabupaten_pihak_pertama']);
-        $data['arr_desa_pertama'] = $this->cm->arr_dropdown3("tiger_desa", "id", "desa", "desa", "id_kecamatan", $data['kecamatan_pihak_pertama']);
+    
+    $this->db->where('id', $id);
+    $data = $this->db->get('pelepasan')->row_array();
+    $data['tanggal'] = flipdate($data['tanggal']);
+    
+    $this->db->where('id_surat', $id);
+    $data['dt_surat'] = $this->db->get('surat_pelepasan')->result_array();
+    $this->db->where('id_pelepasan', $id);
+    $data['dt_saksi'] = $this->db->get('saksi_pelepasan')->result_array();
+    $data['biaya_ganti_rugi'] = rupiah($data['biaya_ganti_rugi']);
 
-        $data['arr_provinsi_kedua'] = $this->cm->arr_dropdown("tiger_provinsi", "id", "provinsi", "provinsi");
-        $data['arr_kota_kedua'] = $this->cm->arr_dropdown3("tiger_kota", "id", "kota", "kota", "id_provinsi", $data['provinsi_pihak_kedua']);
-        $data['arr_kecamatan_kedua'] = $this->cm->arr_dropdown3("tiger_kecamatan", "id", "kecamatan", "kecamatan", "id_kota", $data['kabupaten_pihak_kedua']);
-        $data['arr_desa_kedua'] = $this->cm->arr_dropdown3("tiger_desa", "id", "desa", "desa", "id_kecamatan", $data['kecamatan_pihak_kedua']);
+    $pihak_pertama = $this->dm->data_pihak_pertama($id);
+    $data['dt_pihak_pertama'] = $pihak_pertama->result_array();
+    $data['jumlah_pihak_pertama'] = $pihak_pertama->num_rows();
+    // $result = get_pemilik($req_param)->result_array();
 
-        $data['arr_desa_tanah'] = $this->cm->arr_dropdown3("tiger_desa", "id", "desa", "desa", "id_kecamatan", $data['kecamatan']);
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['propinsi'], 'provinsi')->row();
+    $data['propinsi'] = $rs->provinsi;
 
-        $data['tanggal'] = flipdate($data['tanggal']);
-        $data['action'] = 'update';
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten'], 'kota')->row();
+    $data['kabupaten'] = $rs->kota;
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan'], 'kecamatan')->row();
+    $data['kecamatan'] = $rs->kecamatan;
+     $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa'], 'desa')->row();
+    $data['desa'] = $rs->desa;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_kedua'], 'kota')->row();
+    $data['kabupaten_pihak_kedua'] = $rs->kota;
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_pertama'], 'kota')->row();
+    $data['kabupaten_pihak_pertama'] = $rs->kota;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['provinsi_pihak_pertama'], 'provinsi')->row();
+    $data['provinsi_pihak_pertama'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['provinsi_pihak_kedua'], 'provinsi')->row();
+    $data['provinsi_pihak_kedua'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan_pihak_pertama'], 'kecamatan')->row();
+    $data['kecamatan_pihak_pertama'] = $rs->kecamatan;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa_pihak_pertama'], 'desa')->row();
+    $data['desa_pihak_pertama'] = $rs->desa;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan_pihak_kedua'], 'kecamatan')->row();
+    $data['kecamatan_pihak_kedua'] = $rs->kecamatan;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa_pihak_kedua'], 'desa')->row();
+    $data['desa_pihak_kedua'] = $rs->desa;
          
-		$content = $this->load->view("pelepasan_tanah_form_view",$data,true);
+		$content = $this->load->view($this->controller."_aprove_form",$data,true);
 
        
 
-		$this->set_subtitle("Edit Surat Pelepasan");
-		$this->set_title("Edit Surat Pelepasan");
+		$this->set_subtitle("Kecamatan");
+		$this->set_title("Menyetujui Surat");
 		$this->set_content($content);
 		$this->cetak();
 
@@ -958,7 +910,7 @@ function saksi_update(){
 
 function simpan(){
     $post = $this->input->post();
-    $userdata = $this->session->userdata('desa_login');
+    $userdata = $this->session->userdata('kec_login');
     $post['desa'] = $userdata['desa'];
     $date = flipdate($post['tanggal']);
         $date = DateTime::createFromFormat("Y-m-d", $date);
@@ -1055,7 +1007,7 @@ else {
 
 function saksi_simpan(){
 
-    $userdata = $this->session->userdata('desa_login');
+    $userdata = $this->session->userdata('kec_login');
     
     $post = $this->input->post();
     //     $post['nama_surat'] = "Penyerahan/Pelepasan Hak Atas Tanah";
@@ -1082,7 +1034,7 @@ function saksi_simpan(){
 
 if($this->form_validation->run() == TRUE ) { 
 
-        // $userdata = $this->session->userdata('desa_login');
+        // $userdata = $this->session->userdata('kec_login');
         // $post['kades'] = $userdata['kepala_desa'];
         // $post['tgl_surat_kec'] = flipdate($post['tgl_surat_kec']);
         
@@ -1104,7 +1056,7 @@ else {
 
 function tmp_saksi_simpan(){
 
-    $userdata = $this->session->userdata('desa_login');
+    $userdata = $this->session->userdata('kec_login');
     
     $post = $this->input->post();
     //     $post['nama_surat'] = "Penyerahan/Pelepasan Hak Atas Tanah";
@@ -1131,7 +1083,7 @@ function tmp_saksi_simpan(){
 
 if($this->form_validation->run() == TRUE ) { 
 
-        // $userdata = $this->session->userdata('desa_login');
+        // $userdata = $this->session->userdata('kec_login');
         // $post['kades'] = $userdata['kepala_desa'];
         // $post['tgl_surat_kec'] = flipdate($post['tgl_surat_kec']);
         
@@ -1154,7 +1106,7 @@ else {
 
 function tmp_surat_pelepasam_simpan(){
 
-    $userdata = $this->session->userdata('desa_login');
+    $userdata = $this->session->userdata('kec_login');
     
     $post = $this->input->post();
     //     $post['nama_surat'] = "Penyerahan/Pelepasan Hak Atas Tanah";
@@ -1180,7 +1132,7 @@ function tmp_surat_pelepasam_simpan(){
 
 if($this->form_validation->run() == TRUE ) { 
 
-        // $userdata = $this->session->userdata('desa_login');
+        // $userdata = $this->session->userdata('kec_login');
         // $post['kades'] = $userdata['kepala_desa'];
         // $post['tgl_surat_kec'] = flipdate($post['tgl_surat_kec']);
         
@@ -1202,7 +1154,7 @@ else {
 
 function surat_pelepasam_simpan(){
 
-    $userdata = $this->session->userdata('desa_login');
+    $userdata = $this->session->userdata('kec_login');
     
     $post = $this->input->post();
     //     $post['nama_surat'] = "Penyerahan/Pelepasan Hak Atas Tanah";
@@ -1228,7 +1180,7 @@ function surat_pelepasam_simpan(){
 
 if($this->form_validation->run() == TRUE ) { 
 
-        // $userdata = $this->session->userdata('desa_login');
+        // $userdata = $this->session->userdata('kec_login');
         // $post['kades'] = $userdata['kepala_desa'];
         // $post['tgl_surat_kec'] = flipdate($post['tgl_surat_kec']);
         
@@ -1250,7 +1202,7 @@ else {
 
 function update(){
      $post = $this->input->post();
-    $userdata = $this->session->userdata('desa_login');
+    $userdata = $this->session->userdata('kec_login');
     $post['desa'] = $userdata['desa'];
     $date = flipdate($post['tanggal']);
         $date = DateTime::createFromFormat("Y-m-d", $date);
@@ -1314,7 +1266,7 @@ else {
 
 function tmp_surat_simpan(){
 
-    $userdata = $this->session->userdata('desa_login');
+    $userdata = $this->session->userdata('kec_login');
     
     $post = $this->input->post();
         $post['nama_surat'] = "Keterangan Jual Beli";
@@ -1337,7 +1289,7 @@ function tmp_surat_simpan(){
 
 if($this->form_validation->run() == TRUE ) { 
 
-        // $userdata = $this->session->userdata('desa_login');
+        // $userdata = $this->session->userdata('kec_login');
         // $post['kades'] = $userdata['kepala_desa'];
         $post['tgl_surat_kec'] = flipdate($post['tgl_surat_kec']);
         
@@ -1375,6 +1327,23 @@ else {
         echo json_encode($arr);
     }
 
+    function aprovesurat(){
+        $get = $this->input->post();
+        $id = $get['id'];
+
+        $data = array('status' => 1, );
+        $this->db->where('id', $id);
+        $res = $this->db->update('pelepasan', $data);
+        if($res){
+            $arr = array("error"=>false,"message"=>"DATA BERHASIL DISETUJUI");
+        }
+        else {
+            $arr = array("error"=>true,"message"=>"DATA GAGAL DISETUJUI ".mysql_error());
+        }
+        //redirect('sa_birojasa_user');
+        echo json_encode($arr);
+    }
+
        function hapusdata_surat(){
         $get = $this->input->post();
         $id = $get['id'];
@@ -1393,9 +1362,94 @@ else {
     }
 
 
+function pdfberita(){
+
+   $get = $this->input->get(); 
+    $id = $get['id'];
+
+    
+    $this->db->where('id', $id);
+    $data = $this->db->get('pelepasan')->row_array();
+    // $data['tanggal'] = flipdate($data['tanggal']);
+    
+    $this->db->where('id_surat', $id);
+    $data['dt_surat'] = $this->db->get('surat_pelepasan')->result_array();
+    $this->db->where('id_pelepasan', $id);
+    $data['dt_saksi'] = $this->db->get('saksi_pelepasan')->result_array();
+    $data['biaya_ganti_rugi'] = rupiah($data['biaya_ganti_rugi']);
+
+    $pihak_pertama = $this->dm->data_pihak_pertama($id);
+    $data['dt_pihak_pertama'] = $pihak_pertama->result_array();
+    $data['jumlah_pihak_pertama'] = $pihak_pertama->num_rows();
+    // $result = get_pemilik($req_param)->result_array();
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['propinsi'], 'provinsi')->row();
+    $data['propinsi'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten'], 'kota')->row();
+    $data['kabupaten'] = $rs->kota;
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan'], 'kecamatan')->row();
+    $data['kecamatan'] = $rs->kecamatan;
+     $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa'], 'desa')->row();
+    $data['desa'] = $rs->desa;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_kedua'], 'kota')->row();
+    $data['kabupaten_pihak_kedua'] = $rs->kota;
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_pertama'], 'kota')->row();
+    $data['kabupaten_pihak_pertama'] = $rs->kota;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['provinsi_pihak_pertama'], 'provinsi')->row();
+    $data['provinsi_pihak_pertama'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['provinsi_pihak_kedua'], 'provinsi')->row();
+    $data['provinsi_pihak_kedua'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan_pihak_pertama'], 'kecamatan')->row();
+    $data['kecamatan_pihak_pertama'] = $rs->kecamatan;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa_pihak_pertama'], 'desa')->row();
+    $data['desa_pihak_pertama'] = $rs->desa;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan_pihak_kedua'], 'kecamatan')->row();
+    $data['kecamatan_pihak_kedua'] = $rs->kecamatan;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa_pihak_kedua'], 'desa')->row();
+    $data['desa_pihak_kedua'] = $rs->desa;
+
+    $data['controller'] = get_class($this);
+    $data['header'] = "Berita Acara";
+    $data['title'] = $data['header'];
+    $this->load->library('Pdf');
+        $pdf = new Pdf('L', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetTitle( $data['header']);
+     
+        $pdf->SetMargins(10, 10, 10);
+        $pdf->SetHeaderMargin(10);
+        $pdf->SetFooterMargin(10);
+        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+        $pdf->SetAutoPageBreak(true,10);
+        $pdf->SetAuthor('PKPD  taujago@gmail.com');
+         
+            
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(true);
+
+         // add a page
+        $pdf->AddPage('P');
+
+ 
+
+         $html = $this->load->view("berita_acara_pdf",$data,true);
+         $pdf->writeHTML($html, true, false, true, false, '');
+
+ 
+         $pdf->Output($data['header']. $this->session->userdata("tahun") .'.pdf', 'I');
+}
 
 
-  function pdf() {
+
+ function pdf() {
 
     $get = $this->input->get(); 
     $id = $get['id'];
@@ -1410,6 +1464,11 @@ else {
     $this->db->where('id_pelepasan', $id);
     $data['dt_saksi'] = $this->db->get('saksi_pelepasan')->result_array();
     $data['biaya_ganti_rugi'] = rupiah($data['biaya_ganti_rugi']);
+
+    $pihak_pertama = $this->dm->data_pihak_pertama($id);
+    $data['dt_pihak_pertama'] = $pihak_pertama->result_array();
+    $data['jumlah_pihak_pertama'] = $pihak_pertama->num_rows();
+    // $result = get_pemilik($req_param)->result_array();
 
     $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['propinsi'], 'provinsi')->row();
     $data['propinsi'] = $rs->provinsi;
@@ -1479,6 +1538,7 @@ else {
  
          $pdf->Output($data['header']. $this->session->userdata("tahun") .'.pdf', 'I');
 }
+
 
 
  

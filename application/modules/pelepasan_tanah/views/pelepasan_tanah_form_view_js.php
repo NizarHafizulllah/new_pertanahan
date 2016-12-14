@@ -323,43 +323,43 @@ function surat_simpan(){
 
 
 
-$('#no_surat').focus(function(){
-    console.log('test');
+// $('#no_surat').focus(function(){
+//     console.log('test');
 
-    $.ajax({
-        url : '<?php echo site_url("$this->controller/get_no_surat") ?>',
-        data :  $("#form_data").serialize(), 
-        type : 'post',
-        dataType : 'json',
-        success : function(obj) {
+//     $.ajax({
+//         url : '<?php echo site_url("$this->controller/get_no_surat") ?>',
+//         data :  $("#form_data").serialize(), 
+//         type : 'post',
+//         dataType : 'json',
+//         success : function(obj) {
 
-            console.log(obj.error);
+//             console.log(obj.error);
 
-            if(obj.error == false) { // berhasil 
+//             if(obj.error == false) { // berhasil 
 
-                // alert('hooooo.. error false');
-                     console.log(obj.error);
-            $("#no_surat").val(obj.no_surat);
+//                 // alert('hooooo.. error false');
+//                      console.log(obj.error);
+//             $("#no_surat").val(obj.no_surat);
            
             
-            }
-            else {
-                 BootstrapDialog.alert({
-                            type: BootstrapDialog.TYPE_DANGER,
-                            title: 'Error',
-                            message: obj.message 
+//             }
+//             else {
+//                  BootstrapDialog.alert({
+//                             type: BootstrapDialog.TYPE_DANGER,
+//                             title: 'Error',
+//                             message: obj.message 
                              
-                        });
-                        // $("#rp_daftar_stnk").val(obj.rp_daftar_stnk);
+//                         });
+//                         // $("#rp_daftar_stnk").val(obj.rp_daftar_stnk);
             
-            }
+//             }
 
             
-        }
-    });
-    return false;
+//         }
+//     });
+//     return false;
 
-});
+// });
 
 
    $("#tombolsubmitsimpan").click(function(){

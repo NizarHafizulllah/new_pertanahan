@@ -147,7 +147,7 @@ folder instead of downloading all of them to reduce the load. -->
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo site_url('regis_kec'); ?>"><i class="fa fa-folder"></i> Data Pertanahan</a></li>
-                <li><a href="<?php echo site_url('pelepasan_tanah'); ?>"><i class="fa fa-folder"></i> Pelepasan Tanah</a></li>
+                <li><a href="<?php echo site_url('pelepasan_tanah_kec'); ?>"><i class="fa fa-folder"></i> Pelepasan Tanah</a></li>
                 <li><a href="<?php echo site_url('kecamatan_add_desa'); ?>"><i class="fa fa-user-plus"></i> Tambah Admin Desa</a></li>
               </ul>
             </li>

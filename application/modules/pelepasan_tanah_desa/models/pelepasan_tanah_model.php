@@ -88,6 +88,27 @@ function get_surat_detail($id){
 	return $res->row_array();
 }
 
+function get_perbatasan_detail($id){
+
+	$this->db->select(
+		't.* '
+		)->from('pelepasan_pemilik_batas t');
+	$this->db->where("t.id",$id);
+	$res = $this->db->get();
+	return $res->row_array();
+}
+
+
+function get_pihak_pertama_detail($id){
+
+	$this->db->select(
+		't.* '
+		)->from('pelepasan_pihak_pertama t');
+	$this->db->where("t.id",$id);
+	$res = $this->db->get();
+	return $res->row_array();
+}
+
 
 function get_saksi_detail($id){
 
@@ -170,6 +191,45 @@ function get_saksi_detail($id){
 		// echo $this->db->last_query(); exit;
  		return $res;
 	}
+
+
+function get_pihak_pertama($param)
+	{		
+
+		// show_array($param);
+		// exit;
+
+		 extract($param);
+
+		 
+
+		 $kolom = array(0=>	"id",
+		 					"id_surat",
+		 												 
+		 	);
+
+
+		
+
+		 
+		 $this->db->where("id_surat", $id_surat);
+
+
+		 
+
+		
+
+		($param['limit'] != null ? $this->db->limit($param['limit']['end'], $param['limit']['start']) : '');
+		//$this->db->limit($param['limit']['end'], $param['limit']['start']) ;
+       
+       ($param['sort_by'] != null) ? $this->db->order_by($kolom[$param['sort_by']], $param['sort_direction']) :'';
+        
+		$res = $this->db->get('pelepasan_pihak_pertama');
+		// echo $this->db->last_query(); exit;
+ 		return $res;
+	}
+
+
 
  function get_saksi($param)
 	{		
@@ -284,7 +344,128 @@ function temp_get_pihak_pertama($param)
  		return $res;
 	}	
 
+	function temp_get_perbatasan($param)
+	{		
 
+		// show_array($param);
+		// exit;
+
+		 extract($param);
+
+		 
+
+		 $kolom = array(0=>	"id",
+		 					"nama",
+		 					"alamat",
+		 					"umur",
+
+		 												 
+		 	);
+
+
+		
+
+		 
+		 $this->db->where("temp_id_surat", $temp_id_surat);
+
+
+		 
+
+		
+
+		($param['limit'] != null ? $this->db->limit($param['limit']['end'], $param['limit']['start']) : '');
+		//$this->db->limit($param['limit']['end'], $param['limit']['start']) ;
+       
+       ($param['sort_by'] != null) ? $this->db->order_by($kolom[$param['sort_by']], $param['sort_direction']) :'';
+        
+		$res = $this->db->get('pelepasan_pemilik_batas');
+		// echo $this->db->last_query(); exit;
+ 		return $res;
+	}	
+
+	function get_perbatasan($param)
+	{		
+
+		// show_array($param);
+		// exit;
+
+		 extract($param);
+
+		 
+
+		 $kolom = array(0=>	"id",
+		 					"nama",
+		 					"alamat",
+		 					"umur",
+
+		 												 
+		 	);
+
+
+		
+
+		 
+		 $this->db->where("id_surat", $id_surat);
+
+
+		 
+
+		
+
+		($param['limit'] != null ? $this->db->limit($param['limit']['end'], $param['limit']['start']) : '');
+		//$this->db->limit($param['limit']['end'], $param['limit']['start']) ;
+       
+       ($param['sort_by'] != null) ? $this->db->order_by($kolom[$param['sort_by']], $param['sort_direction']) :'';
+        
+		$res = $this->db->get('pelepasan_pemilik_batas');
+		// echo $this->db->last_query(); exit;
+ 		return $res;
+	}	
+
+
+	function data_pihak_pertama($id){
+		 $this->db->select('p.*, ds.desa as nama_desa, kc.kecamatan as nama_kecamatan, kt.kota as nama_kota' );
+
+		 	$this->db->from("pelepasan_pihak_pertama p");
+		 	$this->db->join('tiger_desa ds','p.id_desa=ds.id','left');
+		 	$this->db->join('tiger_kecamatan kc','p.id_kecamatan=kc.id','left');
+		 	$this->db->join('tiger_kota kt','p.id_kota=kt.id','left');
+		 	
+		 	
+		
+
+		 
+		 $this->db->where("p.id_surat", $id);
+
+		 $res = $this->db->get();
+		 return $res;
+	}
+
+	function data_batas($id){
+		
+		 	
+		 	
+		
+
+		 $this->db->where('jenis', 't');
+		 $this->db->where("id_surat", $id);
+
+		 $res = $this->db->get('pelepasan_pemilik_batas');
+		 return $res;
+	}
+
+	function data_saksi_pengukuran($id){
+		
+		 	
+		 	
+		
+
+		
+		 $this->db->where("id_surat", $id);
+
+		 $res = $this->db->get('pelepasan_pemilik_batas');
+		 return $res;
+	}
 	
 // temp_get_pihak_pertama
 
