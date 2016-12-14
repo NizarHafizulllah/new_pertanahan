@@ -76,7 +76,24 @@ class pelepasan_tanah_kec_model extends CI_Model {
 	}
 
 
+function data_pihak_pertama($id){
+		 $this->db->select('p.*, ds.desa as nama_desa, kc.kecamatan as nama_kecamatan, kt.kota as nama_kota, pr.provinsi as nama_provinsi' );
 
+		 	$this->db->from("pelepasan_pihak_pertama p");
+		 	$this->db->join('tiger_desa ds','p.id_desa=ds.id','left');
+		 	$this->db->join('tiger_kecamatan kc','p.id_kecamatan=kc.id','left');
+		 	$this->db->join('tiger_kota kt','p.id_kota=kt.id','left');
+		 	$this->db->join('tiger_provinsi pr','p.id_provinsi=pr.id','left');
+		 	
+		 	
+		
+
+		 
+		 $this->db->where("p.id_surat", $id);
+
+		 $res = $this->db->get();
+		 return $res;
+	}
 
 function get_surat_detail($id){
 

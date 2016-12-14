@@ -46,7 +46,7 @@ $(document).ready(function(){
 function printsurat(id){
   
    
-  window.open('<?php echo site_url("pelepasan_tanah/pdf?id=") ?>'+id);
+  window.open('<?php echo site_url("$this->controller/pdf?id=") ?>'+id);
   
 }
 

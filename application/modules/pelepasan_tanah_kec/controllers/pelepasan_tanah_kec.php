@@ -193,6 +193,7 @@ else {
                               </button>
                               <ul class='dropdown-menu' role='menu'>
                                 <li><a href='#'  onclick=\"printsurat('$id')\"><i class='fa fa-print'></i> Print Surat</a></li>
+                                <li><a href='pelepasan_tanah_kec/aprove?id=$id'><i class='fa fa-eye'></i> Detail</a></li>
                               </ul>
                             </div>";
         }
@@ -740,8 +741,11 @@ function get_saksi_detail($id){
     }
     
 
+
+
     function aprove(){
-    	 $get = $this->input->get(); 
+    	
+    $get = $this->input->get(); 
     $id = $get['id'];
 
     
@@ -754,6 +758,11 @@ function get_saksi_detail($id){
     $this->db->where('id_pelepasan', $id);
     $data['dt_saksi'] = $this->db->get('saksi_pelepasan')->result_array();
     $data['biaya_ganti_rugi'] = rupiah($data['biaya_ganti_rugi']);
+
+    $pihak_pertama = $this->dm->data_pihak_pertama($id);
+    $data['dt_pihak_pertama'] = $pihak_pertama->result_array();
+    $data['jumlah_pihak_pertama'] = $pihak_pertama->num_rows();
+    // $result = get_pemilik($req_param)->result_array();
 
     $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['propinsi'], 'provinsi')->row();
     $data['propinsi'] = $rs->provinsi;
@@ -792,8 +801,8 @@ function get_saksi_detail($id){
 
        
 
-		$this->set_subtitle("Edit Surat Pelepasan");
-		$this->set_title("Edit Surat Pelepasan");
+		$this->set_subtitle("Kecamatan");
+		$this->set_title("Menyetujui Surat");
 		$this->set_content($content);
 		$this->cetak();
 
@@ -1318,6 +1327,23 @@ else {
         echo json_encode($arr);
     }
 
+    function aprovesurat(){
+        $get = $this->input->post();
+        $id = $get['id'];
+
+        $data = array('status' => 1, );
+        $this->db->where('id', $id);
+        $res = $this->db->update('pelepasan', $data);
+        if($res){
+            $arr = array("error"=>false,"message"=>"DATA BERHASIL DISETUJUI");
+        }
+        else {
+            $arr = array("error"=>true,"message"=>"DATA GAGAL DISETUJUI ".mysql_error());
+        }
+        //redirect('sa_birojasa_user');
+        echo json_encode($arr);
+    }
+
        function hapusdata_surat(){
         $get = $this->input->post();
         $id = $get['id'];
@@ -1336,9 +1362,94 @@ else {
     }
 
 
+function pdfberita(){
+
+   $get = $this->input->get(); 
+    $id = $get['id'];
+
+    
+    $this->db->where('id', $id);
+    $data = $this->db->get('pelepasan')->row_array();
+    // $data['tanggal'] = flipdate($data['tanggal']);
+    
+    $this->db->where('id_surat', $id);
+    $data['dt_surat'] = $this->db->get('surat_pelepasan')->result_array();
+    $this->db->where('id_pelepasan', $id);
+    $data['dt_saksi'] = $this->db->get('saksi_pelepasan')->result_array();
+    $data['biaya_ganti_rugi'] = rupiah($data['biaya_ganti_rugi']);
+
+    $pihak_pertama = $this->dm->data_pihak_pertama($id);
+    $data['dt_pihak_pertama'] = $pihak_pertama->result_array();
+    $data['jumlah_pihak_pertama'] = $pihak_pertama->num_rows();
+    // $result = get_pemilik($req_param)->result_array();
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['propinsi'], 'provinsi')->row();
+    $data['propinsi'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten'], 'kota')->row();
+    $data['kabupaten'] = $rs->kota;
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan'], 'kecamatan')->row();
+    $data['kecamatan'] = $rs->kecamatan;
+     $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa'], 'desa')->row();
+    $data['desa'] = $rs->desa;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_kedua'], 'kota')->row();
+    $data['kabupaten_pihak_kedua'] = $rs->kota;
+    $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_pertama'], 'kota')->row();
+    $data['kabupaten_pihak_pertama'] = $rs->kota;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['provinsi_pihak_pertama'], 'provinsi')->row();
+    $data['provinsi_pihak_pertama'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['provinsi_pihak_kedua'], 'provinsi')->row();
+    $data['provinsi_pihak_kedua'] = $rs->provinsi;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan_pihak_pertama'], 'kecamatan')->row();
+    $data['kecamatan_pihak_pertama'] = $rs->kecamatan;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa_pihak_pertama'], 'desa')->row();
+    $data['desa_pihak_pertama'] = $rs->desa;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan_pihak_kedua'], 'kecamatan')->row();
+    $data['kecamatan_pihak_kedua'] = $rs->kecamatan;
+
+    $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa_pihak_kedua'], 'desa')->row();
+    $data['desa_pihak_kedua'] = $rs->desa;
+
+    $data['controller'] = get_class($this);
+    $data['header'] = "Berita Acara";
+    $data['title'] = $data['header'];
+    $this->load->library('Pdf');
+        $pdf = new Pdf('L', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->SetTitle( $data['header']);
+     
+        $pdf->SetMargins(10, 10, 10);
+        $pdf->SetHeaderMargin(10);
+        $pdf->SetFooterMargin(10);
+        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+        $pdf->SetAutoPageBreak(true,10);
+        $pdf->SetAuthor('PKPD  taujago@gmail.com');
+         
+            
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(true);
+
+         // add a page
+        $pdf->AddPage('P');
+
+ 
+
+         $html = $this->load->view("berita_acara_pdf",$data,true);
+         $pdf->writeHTML($html, true, false, true, false, '');
+
+ 
+         $pdf->Output($data['header']. $this->session->userdata("tahun") .'.pdf', 'I');
+}
 
 
-  function pdf() {
+
+ function pdf() {
 
     $get = $this->input->get(); 
     $id = $get['id'];
@@ -1353,6 +1464,11 @@ else {
     $this->db->where('id_pelepasan', $id);
     $data['dt_saksi'] = $this->db->get('saksi_pelepasan')->result_array();
     $data['biaya_ganti_rugi'] = rupiah($data['biaya_ganti_rugi']);
+
+    $pihak_pertama = $this->dm->data_pihak_pertama($id);
+    $data['dt_pihak_pertama'] = $pihak_pertama->result_array();
+    $data['jumlah_pihak_pertama'] = $pihak_pertama->num_rows();
+    // $result = get_pemilik($req_param)->result_array();
 
     $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['propinsi'], 'provinsi')->row();
     $data['propinsi'] = $rs->provinsi;
@@ -1422,6 +1538,7 @@ else {
  
          $pdf->Output($data['header']. $this->session->userdata("tahun") .'.pdf', 'I');
 }
+
 
 
  

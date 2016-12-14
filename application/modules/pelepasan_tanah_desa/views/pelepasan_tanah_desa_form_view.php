@@ -205,7 +205,10 @@
                 <div class="box-body">
                   
                     <!-- text input -->
-
+                    <div class="form-group">
+                      <label class="col-md-2">Yang Mengukur</label>
+                      <div class="col-md-10"><input type="text" class="form-control" placeholder="Pengukur." name="pengukur" value="<?php echo isset($pengukur)?$pengukur:''; ?>"></div>
+                    </div>
 
                     <div class="form-group">
                       <label class="col-md-2">Panjang Batas Barat</label>
@@ -241,12 +244,6 @@
                       <div class="col-md-10"><input type="text" class="form-control" placeholder="Nama Batas Utara(Satuan Meter) ..." name="nama_batas_utara" value="<?php echo isset($nama_batas_utara)?$nama_batas_utara:''; ?>"></div>
                     </div>
                     <div class="form-group">
-                      <label class="col-md-2">Desa/Kelurahan</label>
-                      <div class="col-md-10">
-                        <?php echo form_dropdown("desa",$arr_desa_tanah,isset($desa)?$desa:"",'id="desa" class="form-control"'); ?>
-                        </div>
-                    </div>
-                    <div class="form-group">
                       <label class="col-md-2">Wilayah</label>
                       <div class="col-md-10">
                       <textarea class="form-control" rows="3" placeholder="Wilayah ..." name="wilayah"><?php echo isset($wilayah)?$wilayah:''; ?></textarea></div>
@@ -264,6 +261,29 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
 
+
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Saksi - saksi Pengukuran</h3>
+                  <div class="pull-right"><a href="javascript:perbatasan_pelepasan_add();" id="add_perbatasan_pelepasan" class="btn btn-primary">Tambah Saksi</a></div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  
+                    <!-- text input -->
+                    <br>
+                    <table width="100%"  border="0" class="table table-striped table-bordered table-hover dataTable no-footer" id="perbatasan" role="grid">
+                        <thead>
+                          <tr >
+                            <th width="40%">Nama</th>
+                            <th width="40%">Sebagai</th>
+                            <th width="20%">#</th>
+                            </tr>   
+                        </thead>
+                      </table>
+
+                    
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
            
 
 
@@ -328,7 +348,7 @@
               </div><!-- /.box -->
               
               <button style="border-radius: 9px;" id="tombolsubmitupdate" class="btn btn-block btn-primary btn-lg">Simpan</button>
-              <a style="border-radius: 9px;" href="<?php echo site_url('pelepasan_tanah'); ?>" class='btn btn-block btn-danger btn-lg'>Batal</a>
+              <a style="border-radius: 9px;" href="<?php echo site_url('pelepasan_tanah_desa'); ?>" class='btn btn-block btn-danger btn-lg'>Batal</a>
                     </div>
                     <?php 
                     }
@@ -392,6 +412,51 @@
   </div>
 
 
+
+
+  <div class="modal fade" id="perbatasan_pelepasan_modal" tabindex="-1" role="dialog" aria-labelledby="PelepasanModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="PerbatasanModal">Tambah Saksi Pengukuran</h4>
+      </div>
+      <div class="modal-body">
+        <form action="" id="form_perbatasan_pelepasan" method="post">
+          <table width="100%"  class='table table-bordered'>
+          <tr>
+            <td width="30%">Nama</td>
+            <td>
+            <input type="text" name="nama" id="nama_perbatasan" class="form-control" placeholder="Nama">
+            <!-- <textarea name="surat" id="isi_surat" class="form-control" ></textarea> -->
+
+            <input type="hidden" name="id" id="id_perbatasan" />
+
+              <!-- <input type="text" name="surat" id="surat" class="form-control" placeholder="Surat"> -->
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">Sebagai</td>
+            <td>
+            <?php echo form_dropdown("jenis",$arr_jenis,'','id="jenis" class="form-control"') ?>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">Jabatan</td>
+            <td>
+            <input type="text" name="sebagai" id="sebagai" class="form-control" placeholder="Jabatan">
+            </td>
+          </tr>   
+            </table>   
+          </form>   
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+          <button type="button" id="btn_simpan_perbatasan_pelepasan" class="btn btn-primary" onclick="surat_pelepasan_update()">Simpan</button>
+        </div>
+      </div>
+    </div>
+  </div>
       
 
 
