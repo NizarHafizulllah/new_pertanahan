@@ -1,12 +1,12 @@
 <html>
   <head>
     <title>
-      <?php echo   $title; ?>
+      <?php echo   $title; 
+	  $data_desa = $this->cm->get_data_desa();
+	  ?>
     </title>
 
  <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/print_style.css">
-
-
 </head>
 
 <body>
@@ -233,7 +233,8 @@
     <table width="100%" border="0" cellpadding="0">
       <tr>
         <td width="65%">&nbsp;</td>
-        <td width="35%" align="center"><?php echo $desa_tanah.', '.tgl_indo(flipdate($tgl_pernyataan)); ?></td>
+        <td width="35%" align="center"><?php echo ucwords(strtolower($desa_tanah)).', '.tgl_indo(flipdate($tgl_pernyataan)); ?><br>
+        Yang membuat pernyataan, </td>
       </tr>
       <tr>
         <td width="65%">&nbsp;</td>
@@ -378,7 +379,27 @@
   </tr>
 </table>
 
-  <br/>
+  <p>&nbsp;</p>
+  <table width="100%" border="0" cellpadding="0">
+    <tr>
+      <td width="2%">&nbsp;</td>
+      <td width="4%">&nbsp;</td>
+      <td width="60%"><strong> SAKSI - SAKSI </strong></td>
+      <td width="34%">&nbsp;</td>
+    </tr>
+    <?php 
+  $no = 0;
+  foreach ($saksi as $row) {
+    $no = $no+1;
+   ?>
+    <tr>
+      <td>&nbsp;</td>
+      <td><?php echo $no; ?></td>
+      <td><?php echo $row->nama; ?></td>
+      <td>(..........................)</td>
+    </tr>
+    <?php } ?>
+  </table>
 <br/> 
 <br/>
 <br/>
@@ -388,8 +409,8 @@
 <table width="100%">
   <tr>
     <td width="6%">&nbsp;</td>
-    <td colspan="2" >Diregister di Kecamatan <?php echo $kec_tanah; ?> </td>
-    <td colspan="2" width="49%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Diregister di Kelurahan/Desa <?php echo $desa_tanah; ?> </td>
+    <td colspan="2" >Diregister di Kecamatan <?php echo  ucwords(strtolower($kec_tanah)); ?> </td>
+    <td colspan="2" width="49%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Diregister di  <?php echo ucwords($data_desa['jenis_wilayah']). " ". ucwords(strtolower($desa_tanah)); ?> </td>
   </tr>
   <tr>
     <td width="6%">&nbsp;</td>
@@ -416,11 +437,11 @@
     <td width="6%">&nbsp;</td>
     <td colspan="2" ><b>CAMAT <?php echo $kec_tanah; ?> </b> </td>
     <?php if($jenis_wilayah=='desa'){ ?>
-    <td colspan="2"><b>KEPALA DESA <?php echo $desa_tanah; ?> </b></td><?php
+    <td colspan="2"><b> <?php echo $data_desa['jabatan']." ". desa_tanah; ?> </b></td><?php
       }else{ ?>
-        <td colspan="2"><b>LURAH <?php echo $desa_tanah; ?> </b></td>
+        <td colspan="2"><b> <?php echo $data_desa['jabatan']." ". $desa_tanah; ?> </b></td>
     <?php  } ?>
-  </tr>
+</tr>
    <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>

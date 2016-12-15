@@ -20,13 +20,25 @@
 					<input type="hidden" name="id" value="<?php echo $id; ?>">
 					<input type="text" name="nama_kades" class="form-control" placeholder="Nama Kepala Desa / Lurah . ." id="nama_kades" value="<?php echo $nama_kades; ?>">
 				</div>
+
+				<div class="form-group">
+					<label>NIP Lurah </label>					 
+					<input type="text" name="nip" class="form-control" placeholder="NIP Lurah (Khusus kelurahan) " id="nip" value="<?php echo $nip; ?>">
+				</div>
+
+				<div class="form-group">
+					<label>Pangkat Lurah  </label>					 
+					<input type="text" name="pangkat" class="form-control" placeholder="Pangkat Lurah (Khusus Kelurahan)" id="pangkat" value="<?php echo $pangkat; ?>">
+				</div>
+
+
 				<div class="form-group">
 					<label>Jabatan</label>
 					<input type="text" name="jabatan" placeholder="Jabatan" class="form-control" id="jabatan" value="<?php echo $jabatan; ?>">
 				</div>
 				<div class="form-group">
 					<label>Jenis Wilayah</label>
-					<?php echo form_dropdown("jenis_wilayah",$arr_jenis_wilayah,'','id="jenis_wilayah" class="form-control select2" style="width: 100%;"'); ?>
+					<?php echo form_dropdown("jenis_wilayah",$arr_jenis_wilayah,$jenis_wilayah,'id="jenis_wilayah" class="form-control select2" style="width: 100%;"'); ?>
 				</div>
 			</div>
 		</div>

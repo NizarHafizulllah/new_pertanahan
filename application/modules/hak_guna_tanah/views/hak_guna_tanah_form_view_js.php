@@ -492,9 +492,9 @@ $('#no_register_desa').focus(function(){
 
                 // alert('hooooo.. error false');
                      console.log(obj.error);
-            $("#no_register_desa").val(obj.no_registrasi_desa);
-            $("#no_ket_desa").val(obj.no_ket_desa);
-            $("#no_berita_acara_desa").val(obj.no_berita_acara_desa);
+            // $("#no_register_desa").val(obj.no_registrasi_desa);
+            // $("#no_ket_desa").val(obj.no_ket_desa);
+            // $("#no_berita_acara_desa").val(obj.no_berita_acara_desa);
             
             }
             else {

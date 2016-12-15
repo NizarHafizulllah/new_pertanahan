@@ -25,6 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Struktur dari tabel `pelepasan_pemilik_batas`
 --
+drop table pelepasan_pemilik_batas; 
 
 CREATE TABLE IF NOT EXISTS `pelepasan_pemilik_batas` (
 `id` int(11) NOT NULL,

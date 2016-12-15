@@ -35,6 +35,12 @@
 </style>
 
 <?php $userdata = $this->session->userdata('desa_login'); 
+$data_desa = $this->cm->get_data_desa();
+
+// if($data_desa['jenis_wilayah'] == "kelurahan"){
+//   $jenis_wilayah = ""
+// }
+
 ?>
 
 <table width="100%" border="0" cellpadding="3">
@@ -42,7 +48,7 @@
     <td width="23%" align="center"><img src="<?php echo base_url()."assets/images/bangka_barat.png"; ?>" width="50" height="60" align="right" /></td>
     <td width="54%" align="center"><p><span class="judul">PEMERINTAH KABUPATEN <?php echo $kab_tanah; ?><br />
       KECAMATAN <?php echo $kec_tanah; ?><br />
-      KANTOR PEMERINTAH DESA <?php echo $desa_tanah; ?></span></p>
+       <?php echo $data_desa['nama_lembaga'] . " ".$desa_tanah; ?></span></p>
       </td>
     <td width="23%" align="center">&nbsp;</td>
   </tr>
@@ -62,7 +68,7 @@
   <tr>
     <td><div align="center"><strong>BERITA ACARA<br/>
           <u>PEMERIKSAAN FISIK BIDANG TANAH</u><br/>
-    NO : <?php echo $no_berita_acara_desa; ?></strong></div></td>
+    NO : </strong><strong><?php echo $no_berita_acara_desa; ?></strong></div></td>
   </tr>
 </table>
 
@@ -72,7 +78,7 @@
 
 <table width="100%">
 <tr>
-  <td width="98%" height="24" align="justify"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada tanggal <?php echo tgl_indo(flipdate($tgl_register_desa)); ?> telah dilakukan pengukuran ulang sebidang tanah yang terletak di <?php echo $dusun_tanah.' Desa '.$desa_tanah.' Kecamatan '.$kec_tanah.' Kabupaten '.$kab_tanah; ?> dilakukan pemeriksaan atas fisik tanah berdasarkan permohonan dari : </p></td>
+  <td width="98%" height="24" align="justify"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pada tanggal <?php echo tgl_indo(flipdate($tgl_register_desa)); ?> telah dilakukan pengukuran atas sebidang tanah yang terletak di <?php echo $jln_tanah." ". " RT ". $rt_tanah. " RW ". $rw_tanah." ".$dusun_tanah. " ".   ucwords($data_desa['jenis_wilayah'])." ".ucwords(strtolower($desa_tanah)).' Kecamatan '.ucwords(strtolower($kec_tanah)).' Kabupaten '.ucwords(strtolower($kab_tanah)); ?> dilakukan pemeriksaan atas fisik tanah berdasarkan permohonan dari : </p></td>
 </tr>
 </table>
 
@@ -115,7 +121,7 @@
 <br/>
 <table width="100%">
   <tr>
-    <td width="98%" height="24" align="justify"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bahwa setelah dilakukan pemeriksaan dan pengukuran yang di saksikan masing - masing sebelah menyebelah membenarkan tanah yang diakui oleh <strong><?php echo $pembuat_pernyataan; ?></strong> tidak bermasalah (sengketa). Dengan batas - batas sebagai berikut.</p></td>
+    <td width="98%" height="24" align="justify"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bahwa setelah dilakukan pemeriksaan dan pengukuran yang di saksikan masing - masing sebelah menyebelah membenarkan tanah yang diakui oleh <strong><?php echo $pembuat_pernyataan; ?></strong> tidak bermasalah (sengketa). Dengan ukuran dan  batas - batas sebagai berikut.</p></td>
   </tr>
 </table>
 <br/>
@@ -124,22 +130,25 @@
   <tr>
     <td width="3%">&nbsp;</td>
     <td width="22%">Sebelah Utara</td>
-    <td width="75%">: <?php echo $panjang_batas_utara.' berbatasan dengan tanah '.$nama_batas_utara; ?> </td>
+    <td width="75%">:  <?php echo $panjang_batas_utara.' berbatasan dengan tanah '.$nama_batas_utara; ?> </td>
   </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>Sebelah Selatan</td>
-    <td>: ± <?php echo $panjang_batas_selatan.' berbatasan dengan tanah '.$nama_batas_selatan; ?> </td>
-  </tr>
+
   <tr>
     <td>&nbsp;</td>
     <td>Sebelah Timur</td>
-    <td>: ± <?php echo $panjang_batas_timur.' berbatasan dengan tanah '.$nama_batas_timur; ?> </td>
+    <td>:  <?php echo $panjang_batas_timur.' berbatasan dengan tanah '.$nama_batas_timur; ?> </td>
   </tr>
+
+  <tr>
+    <td>&nbsp;</td>
+    <td>Sebelah Selatan</td>
+    <td>:  <?php echo $panjang_batas_selatan.' berbatasan dengan tanah '.$nama_batas_selatan; ?> </td>
+  </tr>
+  
   <tr>
     <td>&nbsp;</td>
     <td width="22%">Sebelah Barat</td>
-    <td width="75%">: ± <?php echo $panjang_batas_barat.' berbatasan dengan tanah '.$nama_batas_barat; ?> </td>
+    <td width="75%">:  <?php echo $panjang_batas_barat.' berbatasan dengan tanah '.$nama_batas_barat; ?> </td>
   </tr>
 </table>
 <br/>
@@ -195,19 +204,95 @@
     <td><?php echo $pembuat_pernyataan ?> </td>
   </tr>
 </table>
-<br/>
-<br/>
-<br/>
-<br/>
+<p><br/>
+  <br/>
+</p>
+<table width="100%" border="0" cellpadding="0">
+  <tr>
+    <td width="50%">Saksi Perbatasan</td>
+    <td width="50%"><div align="center"><?php echo ucwords(strtolower($desa_tanah)).', '.tgl_indo(flipdate($tgl_berita_acara)); ?></div></td>
+  </tr>
+  <tr>
+    <td rowspan="5" valign="top"><table width="91%" border="0" cellpadding="0">
+      <?php $no = 0;
+foreach ($saksi as $row) {
+  $no =$no+1;
+  if($no % 2 <> 0) {
+  	$kanan = "";
+	$kiri = "$no ..................";
+  }
+  else {
+  	$kiri = "";
+	$kanan = "$no ..................";
+  }
+ ?>
+      
+      <tr>
+        <td width="5%"><?php echo $no; ?>. </td>
+        <td width="40%"><?php echo $row->nama; ?></td>
+        <td width="28%" align="left"><?php echo $kiri ?></td>
+        <td width="27%" align="right"><?php echo $kanan ?></td>
+      </tr>
+      
+      <?php } ?>
+      
+    </table></td>
+    <td><div align="center">
+      <?php 
+	  echo $data_desa['jabatan'];
+	/*if($data_desa['jenis_wilayah']=="desa"){
+		echo "Kepala Desa ". ucwords(strtolower($desa_tanah));
+	}
+	else {
+	echo "Lurah ". ucwords(strtolower($desa_tanah));
+	}
+	*/
+	?>
+    </div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td align="center"><u><?php echo $nama_kades; ?></u></td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td align="center"><?php 
+		if($data_desa['jenis_wilayah'] == "kelurahan"){
+			echo  $pangkat_kades;
+		}
+	?></td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td align="center"><?php 
+		if($data_desa['jenis_wilayah'] == "kelurahan"){
+			echo "NIP. ".$nip_kades;
+		}
+	?></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><br/>
+  <!--<br/>
+</p>
 <table width="100%" border="0">
   <tr>
     <td width="3%">&nbsp;</td>
     <td width="55%">Saksi Perbatasan</td>
-    <td width="42%"><?php echo $desa_tanah.', '.tgl_indo(flipdate($tgl_berita_acara)); ?></td>
+    <td width="42%">&nbsp;</td>
   </tr>
 </table>
 
-<table width="100%" border="0">
+<table width="100%" border="1">
 <?php $no = 0;
 foreach ($saksi as $row) {
   $no =$no+1;
@@ -228,9 +313,9 @@ foreach ($saksi as $row) {
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td><?php echo $nama_kades; ?></td>
+    <td><br /><br /><br /><br /></td>
   </tr>
-</table>
+</table>-->
 <!-- </div> end of wrap -->
 </body>
 
