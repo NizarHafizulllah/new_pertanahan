@@ -2354,10 +2354,12 @@ function pdfrek(){
     
     $this->db->where('id', $id);
     $data = $this->db->get('pelepasan')->row_array();
+    // show_array($data); exit;
     // $data['tanggal'] = flipdate($data['tanggal']);
     
     $this->db->where('id_surat', $id);
     $data['dt_surat'] = $this->db->get('surat_pelepasan')->result_array();
+
     $this->db->where('id_pelepasan', $id);
     $data['dt_saksi'] = $this->db->get('saksi_pelepasan')->result_array();
     $data['biaya_ganti_rugi'] = rupiah($data['biaya_ganti_rugi']);
@@ -2380,6 +2382,7 @@ function pdfrek(){
     $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten'], 'kota')->row();
     $data['kabupaten'] = $rs->kota;
     $rs = $this->dm->datawilayah('id', 'tiger_kecamatan', $data['kecamatan'], 'kecamatan')->row();
+    // echo $this->db->last_query(); exit;
     $data['kecamatan'] = $rs->kecamatan;
      $rs = $this->dm->datawilayah('id', 'tiger_desa', $data['desa'], 'desa')->row();
     $data['desa'] = $rs->desa;
@@ -2387,6 +2390,7 @@ function pdfrek(){
     $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_kedua'], 'kota')->row();
     $data['kabupaten_pihak_kedua'] = $rs->kota;
     $rs = $this->dm->datawilayah('id', 'tiger_kota', $data['kabupaten_pihak_pertama'], 'kota')->row();
+    // echo $this->db->last_query(); 
     $data['kabupaten_pihak_pertama'] = $rs->kota;
 
     $rs = $this->dm->datawilayah('id', 'tiger_provinsi', $data['provinsi_pihak_pertama'], 'provinsi')->row();
